@@ -3,10 +3,12 @@ packages/*
 
 #忽略obj目录的所有文件
 obj/*
+*/obj/
 HZ.MVC.FaKa/obj/*
 
 #忽略bin目录的所有文件
 bin/*
+*/bin/
 HZ.MVC.FaKa/bin/*
 
 *.Debug.config
