@@ -1,11 +1,13 @@
-#ºöÂÔpackagesÄ¿Â¼µÄËùÓĞÎÄ¼ş
+#å¿½ç•¥packagesç›®å½•çš„æ‰€æœ‰æ–‡ä»¶
 packages/*
 
-#ºöÂÔobjÄ¿Â¼µÄËùÓĞÎÄ¼ş
+#å¿½ç•¥objç›®å½•çš„æ‰€æœ‰æ–‡ä»¶
 obj/*
+HZ.MVC.FaKa/obj/*
 
-#ºöÂÔbinÄ¿Â¼µÄËùÓĞÎÄ¼ş
+#å¿½ç•¥binç›®å½•çš„æ‰€æœ‰æ–‡ä»¶
 bin/*
+HZ.MVC.FaKa/bin/*
 
 *.Debug.config
 *.Release.config
