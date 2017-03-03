@@ -1,0 +1,545 @@
+﻿@{
+    Layout = null;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title id="AgentSiteName">充值页面</title>
+    <meta http-equiv="Content-type" content="text/html; charset=gb2312">
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.7.2/jquery.js?ver=3.4.2"></script>
+    <style>
+        /* CSS Document */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: "microsoft YaHei","微软雅黑";
+            background: #f1f2f7;
+        }
+        /*offen*/
+        .alignMid {
+            width: 990px;
+            margin: 0 auto;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+        }
+
+        .textLeft {
+            text-align: left;
+        }
+
+        .textRight {
+            text-align: right;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .weight {
+            font-weight: bold;
+        }
+
+        .none {
+            display: none;
+        }
+
+        ul, ol, span, li {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        /*TOP*/
+        .top {
+            height: 32px;
+            background: #f2f4f5;
+            line-height: 32px;
+            color: #585858;
+            font-size: 12px;
+        }
+
+            .top label {
+                color: #ff7200;
+            }
+
+            .top a {
+                color: #585858;
+                text-decoration: none;
+            }
+
+                .top a:hover {
+                    text-decoration: underline;
+                    color: #ff7200;
+                }
+        /*header*/
+        .header {
+            background: #FFF;
+        }
+
+        .logoDiv {
+            padding: 13px 0 13px 19px;
+        }
+
+            .logoDiv img {
+                width: 160px;
+                height: 60px;
+            }
+
+        .pageName {
+            line-height: 50px;
+            color: #747474;
+            font-size: 26px;
+            margin-left: 35px;
+        }
+        /*main*/
+        .main {
+            padding: 30px 0;
+        }
+
+        .nav {
+            padding: 0;
+        }
+
+            .nav li {
+                float: left;
+                font-size: 14px;
+                color: #5b5b5b;
+                border: 3px solid #c6cbe1;
+                border-bottom: 0px none;
+                padding: 0 30px;
+                font-weight: bold;
+                position: relative;
+                height: 38px;
+                margin-right: 4px;
+                line-height: 38px;
+                background: #FFF;
+            }
+
+
+
+                .nav li.active {
+                    z-index: 2;
+                    border: 3px solid #9ba2c4;
+                    border-bottom: 0 none #FFF;
+                }
+
+                .nav li:hover {
+                    border-color: #9ba2c4;
+                    cursor: pointer;
+                }
+
+        .content {
+            border: 3px solid #9ba2c4;
+            padding: 10px 0;
+            background: #FFF;
+            margin-top: -3px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .divHidden {
+            display: none;
+        }
+
+        .divShow {
+            display: block;
+        }
+
+        .conMid {
+            width: 870px;
+            margin: 0 auto;
+        }
+
+        .recargeTab {
+            width: 100%;
+        }
+
+            .recargeTab .field {
+                width: 90px;
+                font-size: 14px;
+                color: #4e4e4e;
+                text-align: right;
+            }
+
+            .recargeTab .fieldVal {
+                width: 779px;
+                padding: 15px 0 5px 8px;
+                font-size: 14px;
+            }
+
+
+        /*footer*/
+        .footer {
+            color: #6d6d6d;
+            text-align: center;
+            font-size: 12px;
+            line-height: 60px;
+        }
+
+
+        .black_overlay {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 1001;
+            -moz-opacity: 0.4;
+            opacity: .40;
+            filter: alpha(opacity=40);
+        }
+
+        .white_content {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 751px;
+            height: 493px;
+            border: 6px solid #767576;
+            margin-left: -381px;
+            margin-top: -252px;
+            background-color: white;
+            z-index: 1002;
+            overflow: auto;
+        }
+
+        #dataSelect {
+            width: 90px;
+            padding: 0 5px;
+            height: 35px;
+            line-height: 35px;
+            border: 1px solid #d4d4d4;
+            box-shadow: 0 2px 5px #e9e9e9 inset;
+            outline: none;
+        }
+
+            #dataSelect:focus {
+                border-color: #4ca1d9;
+                box-shadow: 1px 0px 5px #91ccf3;
+            }
+
+        .tip_text, .page_close {
+            color: #8e8e8e;
+            padding-left: 50px;
+            padding-top: 20px;
+            font-size: 13px;
+        }
+
+            .page_close span.secords {
+                color: #ff6000;
+                font-size: 18px;
+            }
+
+                .page_close span.secords a {
+                    color: #2a77d6;
+                }
+
+        .content_left {
+            float: left;
+            width: 480px;
+        }
+
+        .content_right_pc {
+            float: left;
+            border: none;
+            width: 410px;
+            margin-left: 10px;
+        }
+
+        .content_right_m {
+            float: left;
+            border: none;
+            width: 410px;
+            margin-left: 10px;
+            background: url() no-repeat left center;
+        }
+
+        .content h4 {
+            margin-bottom: 10px;
+            margin-left: 25px;
+            font-size: 13px;
+        }
+
+            .content h4 span {
+                color: #fe662b;
+            }
+
+        .content ul {
+            margin-bottom: 20px;
+            list-style: none;
+            margin: 0 20px;
+        }
+
+            .content ul li {
+                padding: 8px;
+                margin-top: 5px;
+                border-bottom: 1px solid #CDEBF5;
+                background: #fff;
+                list-style: none;
+            }
+
+                .content ul li span {
+                    color: #fe662b;
+                }
+
+                .content ul li strong {
+                    color: #fe662b;
+                }
+
+        .clearfix {
+            *zoom: 1;
+        }
+
+        a {
+            color: #444;
+            text-decoration: none;
+        }
+
+        .content .optEmail, .content .payAmount, .content .title {
+            color: #F00;
+            position: absolute;
+        }
+
+        .content .optEmail {
+            top: 118px;
+            left: 180px;
+        }
+
+        .content .payAmount {
+            top: 190px;
+            left: 180px;
+        }
+
+        .content .title {
+            top: 265px;
+            left: 180px;
+        }
+
+        .demo {
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            font-size: 36px;
+            color: #999999;
+            width: 60px;
+        }
+
+        .btn a, .btn input {
+            display: block;
+            width: 130px;
+            height: 34px;
+            line-height: 34px;
+            text-align: center;
+            color: #fff;
+            font- size:14px;
+            background: #1e77d3;
+        }
+
+        .btn input {
+            border: 0;
+            cursor: pointer;
+        }
+
+            .btn a:hover, .btn input:hover {
+                text-decoration: none;
+                background: #15599f;
+            }
+
+        .aliorder {
+            width: 400px;
+            height: 55px;
+            line-height: 55px;
+            color: #666;
+            font-size: 22px;
+            border: 1px solid #ccc;
+            padding: 0 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        //$(document).ready(function () {
+        //    setInterval(function () {
+        //        $.ajax({
+        //            url: "query/",
+        //            type: "post",
+        //            data: { act: "check", orderid: "559440" },
+        //            success: function (d) {
+        //                if (d == "success") {
+
+        //                    alert("支付成功！");
+        //                    location.href = "callback/?orderid=559440";
+
+        //                }
+        //            }
+        //        });
+        //    }, 3000);
+
+
+        //    $("#post_query").click(function () {
+        //        var aliorder = $("#aliorder").val();
+        //        var alisign = $("#alisign").val();
+        //        var aliid = $("#aliid").val();
+        //        var qnum = $("#qnum").val();
+        //        var datas = "Method=Recharge&sid=" + aliorder + "&qnum=" + qnum + "&aliid=" + aliid + "&alisign=" + alisign;
+        //        $("#order_msg").html("正在处理中，请稍等...");
+        //        $.ajax({
+        //            url: "set/",
+        //            type: "post",
+        //            data: datas,
+        //            dataType: "json",
+        //            success: function (result) {
+        //                if (result.Status.Code == "fail") {
+        //                    $("#order_msg").html("<font color=red>" + result.Status.Msg + "</font>");
+        //                }
+        //                if (result.Status.Code == "true") {
+        //                    $("#order_msg").html("<font color='#29c300'>" + result.Status.Msg + "</font>");
+        //                }
+        //            },
+        //            error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //                $("#order_msg").html("<font color=red>系统错误</font>");
+        //            },
+        //            cache: false
+        //        })
+        //        $("#post_query").val("立即验证充值").removeAttr("disabled");
+        //    });
+
+        //})
+
+        //$('.amount-list > li').click(function () {
+        //    for (var i = 0; i < $('.amount-list > li').length; i++) {
+        //        $('.amount-list > li').eq(i).children('.amount-box').removeClass('amount-current');
+        //    }
+        //    $(this).children('.amount-box').addClass('amount-current');
+        //    $("#amount").val($(this).children('.amount-radio').val());
+        //});
+    </script>
+
+
+
+</head>
+<body>
+
+    <div>
+    </div>
+
+    <div>
+
+
+    </div>
+    <div class="header">
+        <div class="alignMid">
+            <div class="pageName left" style="margin-left:0">
+                支付宝充值（订单查询QQ：78751987(非GM)）
+                <br>订单号：ZQ2016121224471
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="alignMid">
+
+            <ul class="nav">
+                <li id="a_left" class="active">扫码转账</li>
+                <li id="a_right">网页支付宝转账</li>
+                <div class="clear">
+                </div>
+            </ul>
+            <div class="content divShow" id="div_left">
+
+                <div class="content_left">
+
+                    <h4><span>充值流程：确认充值后,打开手机支付宝扫描二维码向我们支付宝转账</span></h4>
+
+                    <ul class="clearfix">
+                        <li><span>1.首先打开手机支付宝钱包，扫描右侧二维码并点击转帐</span></li>
+                        <li><span>2.付款金额填写：<strong>0.99</strong></span></li>
+                        <li><span>3.备注填写：<strong>559440</strong></span></li>
+                        <li><span>到账时间：付款成功后,<strong>10秒钟内返回订单结果</strong></span></li>
+                        <li><span>温馨提示：备注请按上面提示填写，<strong>否则无法自动到账，</strong>且备注的内容只能使用一次，如需要多次充值请返回充值网站重新提交订单。</span></li>
+                        <li><span><strong>注意事项：</strong></span></li>
+                        <li><span><strong>　　如充值后10分钟内未到帐请联系页面顶部的订单查询QQ处理.</strong></span></li>
+                        <li><span><strong>　　如果您未填写备注或备注填写错误，请在下面输入支付宝订单号自助验证完成充值.</strong></span></li>
+                    </ul>
+
+                </div>
+                <div class="content_right_m">
+                    <img src="http://laka-res.oss-cn-shanghai.aliyuncs.com/qrcode9.png" style="margin-top:20px; padding-top:20px;margin-left:20px; padding-left:20px;width:345px;height:345px">
+                    <br>
+                </div>
+                <div class="clear"></div>
+                <div style="margin:10px 20px 0 20px">
+                    <input type="hidden" value="a136914ad047051ecc8ab7571cd988b0" id="alisign"><input type="hidden" value="1" id="qnum"><input type="hidden" value="559440" id="aliid"><input class="aliorder" name="aliorder" id="aliorder" type="text" placeholder="请输入支付宝订单号" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"><div class="btn">
+                        <input type="button" id="post_query" value="立即验证充值" style="float:left;"> <span id="order_msg" style="float:left;margin:5px 0 0 10px"></span>
+                        <div class="clear"></div>
+                    </div>
+                    <p><img src="http://laka-res.oss-cn-shanghai.aliyuncs.com/zhuanzhangjilu.gif" alt="查看支付宝订单号"></p>
+                </div>
+            </div>
+            <div class="content divHidden" id="div_right">
+
+
+                <h4><span>充值流程：确认充值后,登录网页支付宝向我们的支付宝转账</span></h4>
+
+                <ul class="clearfix">
+                    <li><span>1.首先请登录网页支付宝，然后点击"转账到支付宝"</span></li>
+                    <li><span>2.请按照如下图所示填写 <strong>(直接点击下面红色字体即可完成复制)</strong><span class="clip_tips"></span></span></li>
+                    <li style="background:url(http://laka-res.oss-cn-shanghai.aliyuncs.com/webalipay.png) no-repeat;width:618px;height:313px; position:relative"><div class="demo">按右侧填写</div><a href="javascript:;" class="optEmail clip_button" data-clipboard-text="78751987@qq.com">78751987@qq.com</a><a href="javascript:;" class="payAmount clip_button" data-clipboard-text="0.99">0.99</a><a href="javascript:;" class="title clip_button" data-clipboard-text="920258">920258</a></li>
+                    <li><div class="btn"><a target="_blank" href="https://auth.alipay.com/login/index.htm?goto=https://shenghuo.alipay.com/send/payment/fill.htm?title=" id="sino_Href">登录支付宝付款</a></div></li>
+                    <li><span>到账时间：付款成功后,<strong>20秒钟内返回订单结果</strong></span></li>
+                    <li><span><strong>注意事项：</strong></span></li>
+                    <li><span><strong>　　如充值后10分钟内未到帐请联系页面顶部的订单查询QQ处理.</strong></span></li>
+                    <li><span><strong>　　如果您未填写备注或备注填写错误，请在下面输入支付宝订单号自助验证完成充值.</strong></span></li>
+                    <li>
+                        <input type="hidden" value="9629bf19d6c009521ba8eb748ada8691" id="alisign"><input type="hidden" value="920258" id="aliid"><input class="aliorder" name="aliorder" id="aliorder" type="text" placeholder="请输入支付宝订单号" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"><div class="btn">
+                            <input type="button" id="post_query" value="立即验证充值" style="float:left;"> <span id="order_msg" style="float:left;margin:5px 0 0 10px"></span><div class="clear"></div>
+                        </div>
+                    </li>
+                    <li><img src="http://laka-res.oss-cn-shanghai.aliyuncs.com/zhuanzhangjilu.gif" alt="查看支付宝订单号"></li>
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <script>
+                $('.nav > li').click(function () {
+                    for (var i = 0; i < $('.nav > li').length; i++) {
+                        $('.nav > li').eq(i).removeClass('active');
+                    }
+                    $(this).addClass('active');
+
+
+                    var a_name = $(this).attr('id');
+                    switch (a_name) {
+                        case "a_left":
+                            $("#div_right").addClass('divHidden');
+                            $("#div_right").removeClass('divShow');
+                            $("#div_left").removeClass('divHidden');
+                            $("#div_left").addClass('divShow');
+                            break;
+                        case "a_right":
+                            $("#div_left").addClass('divHidden');
+                            $("#div_left").removeClass('divShow');
+                            $("#div_right").removeClass('divHidden');
+                            $("#div_right").addClass('divShow');
+                            break;
+                    }
+                });
+            </script>
+        </div>
+    </div>
+    <div class="footer">
+        版权所有 <label id="Copyright">Copyright © 2016</label>
+    </div>
+
+
+</body>
+</html>
