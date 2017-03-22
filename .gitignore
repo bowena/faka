@@ -13,3 +13,5 @@ HZ.MVC.FaKa/bin/*
 
 *.Debug.config
 *.Release.config
+
+*.suo

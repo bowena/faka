@@ -12,7 +12,7 @@ namespace HZ.MVC.FaKa.Common
         {
             MD5 md5 = MD5.Create();
             String result = String.Empty;
-            byte[] data = md5.ComputeHash(System.Text.Encoding.Default.GetBytes(strSource));
+            byte[] data = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(strSource));
             for (int i = 0; i < data.Length; i++)
             {
                 result += data[i].ToString("x2");
