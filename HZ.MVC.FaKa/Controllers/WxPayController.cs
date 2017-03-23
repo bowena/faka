@@ -2,9 +2,11 @@
 using Microsoft.Web.WebPages.OAuth;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WxPayAPI;
 
 namespace HZ.MVC.FaKa.Controllers
 {
@@ -15,24 +17,7 @@ namespace HZ.MVC.FaKa.Controllers
 
         public ActionResult Index()
         {
-            PostData data = new PostData();
-
-            data.Add("appid", "wx69928c2eedef13bd");
-            data.Add("mch_id", "1433411202");
-            data.Add("device_info", "WEB");
-            data.Add("nonce_str", Guid.NewGuid().ToString().Replace("-", ""));
-            data.Add("body", "会员付款");
-            data.Add("out_trade_no", DTHelper.GetCurrentTimeString());
-            data.Add("total_fee", "2");
-            data.Add("spbill_create_ip", "115.60.63.101");
-            data.Add("notify_url", "http://www.69zshi.com");
-            data.Add("trade_type", "NATIVE");
            
-            string sign = data.GetSignValue();
-            data.Add("sign", sign);
-
-            data.Post();
-            string url = data.GetValue("code_url").ToString();//获得统一下单接口返回的二维码链接
             return View();
         }
 
@@ -43,19 +28,27 @@ namespace HZ.MVC.FaKa.Controllers
         /// <returns></returns>
         public ActionResult Order()
         {
+            NativePay nativePay = new NativePay();
 
+            //生成扫码支付模式二url
+            string url = nativePay.GetPayUrl("123456789");
 
-
-            ViewBag.QR_url = "";
+            ViewBag.QR_url = url;
             return View();
         }
 
-        [AllowAnonymous]
-        [ChildActionOnly]
-        public ActionResult ExternalLoginsList(string returnUrl)
+        public ActionResult KaMiList()
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return PartialView("_QrCodePartial", OAuthWebSecurity.RegisteredClientData);
+            //此处接受微信返回通知，进行相应处理
+            System.IO.Stream response = Request.InputStream;
+            using (StreamReader read = new StreamReader(response,System.Text.Encoding.UTF8))
+            {
+                string resStr = read.ReadToEnd();
+            }
+
+
+
+            return View();
         }
 
     }

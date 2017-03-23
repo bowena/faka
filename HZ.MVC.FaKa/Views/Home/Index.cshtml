@@ -103,7 +103,7 @@
         </div>
     </section>
 }
-@using (Html.BeginForm("Index", "WxPay", FormMethod.Post, new { id = "frmOrder" }))
+@using (Html.BeginForm("Order", "WxPay", FormMethod.Post, new { id = "frmOrder" }))
 {
     Html.AntiForgeryToken();
 

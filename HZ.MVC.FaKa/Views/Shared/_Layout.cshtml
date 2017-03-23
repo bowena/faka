@@ -8,8 +8,8 @@
        
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
-        @Styles.Render("~/Content/bootstrap")
         @Scripts.Render("~/bundles/modernizr")
+       
     </head>
     <body>
         <header>
@@ -46,6 +46,7 @@
         </footer>
 
         @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootjs")
         @RenderSection("scripts", required: false)
     </body>
 </html>
