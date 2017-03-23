@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Order";
+}
+<style type="text/css">
+    .center{
+        margin: 0 auto;
+        border:1px solid red;
+        text-align:center;
+        width:300px;
+    }
+
+  .center div p{
+     margin-top:0px;
+  }
+</style>
+<div class="row paypage-logo">
+    
+    <h2>Order</h2>
+   
+</div>
+<div class="center">
+    
+    <div>
+        <img src="http://pan.baidu.com/share/qrcode?w=145&h=148&url=@ViewBag.QR_url" alt="微信支付商品二维码" />
+        <p>打开微信，扫一扫二维码</p>
+    </div>
+</div>
