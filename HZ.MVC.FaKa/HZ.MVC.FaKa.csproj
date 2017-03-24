@@ -343,6 +343,7 @@
     <Content Include="Views\WxPay\Index.cshtml" />
     <Content Include="Views\WxPay\Order.cshtml" />
     <Content Include="Views\WxPay\KaMiList.cshtml" />
+    <Content Include="Views\WxPay\GetPayResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
