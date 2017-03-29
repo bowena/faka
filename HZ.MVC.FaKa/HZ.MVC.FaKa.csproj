@@ -48,6 +48,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\..\项目\jw-desktop\Pro.Library\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -186,6 +189,26 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\KaMiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductTypeController.cs" />
+    <Compile Include="Areas\Admin\Models\Enum\EKamis.cs" />
+    <Compile Include="Areas\Admin\Models\Enum\EOrders.cs" />
+    <Compile Include="Areas\Admin\Models\Enum\EProduct.cs" />
+    <Compile Include="Areas\Admin\Models\Enum\EProductTypes.cs" />
+    <Compile Include="Areas\Admin\Models\Enum\EUsers.cs" />
+    <Compile Include="Areas\Admin\Models\KaMiViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\OrderViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ProductTypeViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ProductViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\UsersViewModel.cs" />
+    <Compile Include="BLL\BKaMi.cs" />
+    <Compile Include="BLL\BOrder.cs" />
+    <Compile Include="BLL\BProduct.cs" />
+    <Compile Include="BLL\BProductType.cs" />
+    <Compile Include="BLL\BUsers.cs" />
     <Compile Include="Common\DateTimeHelper\DTHelper.cs" />
     <Compile Include="Common\Encrypt\MyEncrypt.cs" />
     <Compile Include="Common\PostData.cs" />
@@ -200,6 +223,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\WxPayController.cs" />
+    <Compile Include="Dal\ManagerSqlite.cs" />
+    <Compile Include="Dal\MyConnection.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -279,6 +304,14 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Areas\Admin\Views\Web.config" />
+    <Content Include="App_Data\kami.db" />
+    <Content Include="Areas\Admin\Views\KaMi\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductType\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Include="Properties\PublishProfiles\faka.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -345,9 +378,7 @@
     <Content Include="Views\WxPay\KaMiList.cshtml" />
     <Content Include="Views\WxPay\GetPayResult.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

@@ -10,6 +10,8 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using HZ.MVC.FaKa.Filters;
 using HZ.MVC.FaKa.Models;
+using HZ.MVC.FaKa.BLL;
+using HZ.MVC.FaKa.Common;
 
 namespace HZ.MVC.FaKa.Controllers
 {
@@ -35,13 +37,24 @@ namespace HZ.MVC.FaKa.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
-            {
-                return RedirectToLocal(returnUrl);
-            }
+            //if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            //{
+            //    return RedirectToLocal(returnUrl);
+            //}
 
-            // 如果我们进行到这一步时某个地方出错，则重新显示表单
-            ModelState.AddModelError("", "提供的用户名或密码不正确。");
+            object pwd = BUsers.ExecuteSql("select password from Users where userName='" + model.UserName + "'");
+
+            string inputPwd = MyEncrypt.MD5Encrypt(model.Password);
+
+            if (inputPwd == pwd.ToString())
+            {
+                return RedirectToRoute(new { controller = "ProductType", action = "Index", area = "Admin" });
+            }
+            else
+            {
+                // 如果我们进行到这一步时某个地方出错，则重新显示表单
+                ModelState.AddModelError("", "提供的用户名或密码不正确。");
+            }
             return View(model);
         }
 
