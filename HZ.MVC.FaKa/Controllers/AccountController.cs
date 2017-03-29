@@ -43,7 +43,10 @@ namespace HZ.MVC.FaKa.Controllers
             //}
 
             object pwd = BUsers.ExecuteSql("select password from Users where userName='" + model.UserName + "'");
-
+            if (pwd == null)
+            {
+                return View();
+            }
             string inputPwd = MyEncrypt.MD5Encrypt(model.Password);
 
             if (inputPwd == pwd.ToString())
