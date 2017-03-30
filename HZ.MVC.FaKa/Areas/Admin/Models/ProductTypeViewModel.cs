@@ -12,11 +12,13 @@ namespace HZ.MVC.FaKa.Areas.Admin.Models
             get;
             set;
         }
+
         public string ProductName
         {
             get;
             set;
         }
+
         public DateTime UpdateTime
         {
             get;
