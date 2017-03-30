@@ -24,6 +24,9 @@
     <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
     <script src="~/Scripts/locale/bootstrap-table-zh-CN.js"></script>
 
+    <script src="~/Scripts/toastr.min.js"></script>
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+
     @*4、页面Js文件的引用*@
     <script src="~/Scripts/Admin/ProductType/Index.js"></script>
    
@@ -44,9 +47,9 @@
                 <div class="modal-body">
                     <form id="formSearch" class="form-horizontal">
                         <div class="form-group" style="margin-top:15px">
-                            <label class="control-label col-sm-3" for="txt_search_departmentname">部门名称</label>
+                            <label class="control-label col-sm-3" for="txt_modal_departmentname">部门名称</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="txt_search_departmentname">
+                                <input type="text" class="form-control" id="txt_modal_departmentname">
                             </div>
                         </div>
                     </form>
@@ -69,12 +72,8 @@
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
                         <label class="control-label col-sm-1" for="txt_search_departmentname">部门名称</label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-5">
                             <input type="text" class="form-control" id="txt_search_departmentname">
-                        </div>
-                        <label class="control-label col-sm-1" for="txt_search_statu">状态</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="txt_search_statu">
                         </div>
                         <div class="col-sm-4" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>

@@ -16,14 +16,18 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
         public ActionResult Index()
         {
 
-           
+
 
             return View();
         }
 
-        public JsonResult GetProductTypes(int limit, int offset, string departmentname, string statu)
+        public JsonResult GetProductTypes(int limit, int offset, string departmentname)
         {
-            var lstRes = BProductType.SearchAll();
+            List<ProductTypeViewModel> lstRes = null;
+            if (!string.IsNullOrEmpty(departmentname))
+                lstRes = BProductType.SearchBysql(departmentname);
+            else
+                lstRes = BProductType.SearchAll();
 
             var total = lstRes.Count;
             var rows = lstRes.Skip(offset).Take(limit).ToList();
@@ -37,7 +41,7 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
             model.ProductName = name;
             model.UpdateTime = DateTime.Now;
             bool isSucc = BProductType.Insert(model);
-            if(isSucc)
+            if (isSucc)
             {
                 return Content("success");
             }
@@ -49,19 +53,43 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
 
         public ActionResult Delete()
         {
-            //BProductType.Insert()
             string name = Request.Form["pId"];
 
             List<DeleteId> models = LitJson.JsonMapper.ToObject<List<DeleteId>>(name);
+            if (models == null)
+            {
+                return Content("fail");
+            }
 
-            return View();
+            bool isSucc = BProductType.Delete(models.Select(_ => _.Id).ToList());
+            if (isSucc)
+            {
+                return Content("success");
+            }
+            else
+            {
+                return Content("fail");
+            }
         }
 
         public ActionResult Update()
         {
-            //BProductType.Insert()
+            string newName = Request.Form["proM"];
 
-            return View();
+            ProductTypeViewModel model = LitJson.JsonMapper.ToObject<ProductTypeViewModel>(newName);
+            model.UpdateTime = DateTime.Now;
+            if (model == null)
+            {
+                return Content("fail");
+            }
+            if (BProductType.Update(model))
+            {
+                return Content("success");
+            }
+            else
+            {
+                return Content("fail");
+            }
         }
 
         [Serializable]

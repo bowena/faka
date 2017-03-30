@@ -1,5 +1,21 @@
 ﻿       $(function () {
 
+           toastr.options = {
+               closeButton: false,
+               debug: false,
+               progressBar: true,
+               positionClass: "toast-top-center",
+               onclick: null,
+               showDuration: "300",
+               hideDuration: "1000",
+               timeOut: "2000",
+               extendedTimeOut: "1000",
+               showEasing: "swing",
+               hideEasing: "linear",
+               showMethod: "fadeIn",
+               hideMethod: "fadeOut"
+           };
+
            //1.初始化Table
            var oTable = new TableInit();
            oTable.Init();
@@ -29,7 +45,7 @@ var TableInit = function () {
             pageNumber: 1,                       //初始化加载第一页，默认第一页
             pageSize: 10,                       //每页的记录行数（*）
             pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
-            search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
             strictSearch: true,
             showColumns: true,                  //是否显示所有的列
             showRefresh: true,                  //是否显示刷新按钮
@@ -71,7 +87,6 @@ var TableInit = function () {
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
             departmentname: $("#txt_search_departmentname").val(),
-            statu: $("#txt_search_statu").val()
         };
         return temp;
     };
@@ -91,19 +106,19 @@ var ButtonInit = function () {
 
             postdata.Id = "";
 
-            $("#myModal .btn-primary").click(function () {
+            $("#myModal .btn-primary").unbind("click").click(function () {
                 $.ajax({
                     type: "post",
                     url: "/ProductType/Add",
                     data: { "proT": $("#myModal").find(".form-control").val() },
                     success: function (data, status) {
                         if (data == "success") {
-                            alert("成功");
+                            toastr.success("成功");
                             $('#myModal').modal('hide');
                             $("#tb_departments").bootstrapTable('refresh');
                         }
                         else {
-                            alert("失败，请重试")
+                            toastr.error("失败，请重试")
                         }
                     },
                     error: function () {
@@ -129,17 +144,42 @@ var ButtonInit = function () {
                 return;
             }
             $("#myModalLabel").text("编辑");
-            $("#txt_departmentname").val(arrselections[0].ProductName);
-
+            $("#txt_modal_departmentname").val(arrselections[0].ProductName);
             postdata.Id = arrselections[0].Id;
             $('#myModal').modal();
+
+            $("#myModal .btn-primary").unbind("click").click(function () {
+                
+                postdata.ProductName = $("#txt_modal_departmentname").val();
+                $.ajax({
+                    type: "post",
+                    url: "/ProductType/Update",
+                    data: { "proM": JSON.stringify(postdata) },
+                    success: function (data, status) {
+                        if (data == "success") {
+                            toastr.success("成功");
+                            $('#myModal').modal('hide');
+                            $("#tb_departments").bootstrapTable('refresh');
+                        }
+                        else {
+                            toastr.error("失败，请重试")
+                        }
+                    },
+                    error: function () {
+                        toastr.error('Error');
+                    },
+                    complete: function () {
+
+                    }
+                });
+            });
         });
 
         $("#btn_delete").click(function () {
   
             var arrselections = $("#tb_departments").bootstrapTable('getSelections');
             if (arrselections.length <= 0) {
-                alert('请选择有效数据');
+                toastr.warning('请选择有效数据');
                 return;
             }
 
@@ -153,12 +193,12 @@ var ButtonInit = function () {
                     data: { "pId": JSON.stringify(arrselections) },
                     success: function (data, status) {
                         if (data == "success") {
-                            alert('提交数据成功');
+                            toastr.success('删除成功');
                             $("#tb_departments").bootstrapTable('refresh');
                         }
                     },
                     error: function () {
-                        alert('Error');
+                        toastr.error('Error');
                     },
                     complete: function () {
 
@@ -169,13 +209,13 @@ var ButtonInit = function () {
         });
 
         $("#btn_submit").click(function () {
-            postdata.ProductName = $("#txt_departmentname").val();
+            postdata.ProductName = $("#txt_modal_departmentname").val();
             $.ajax({
                 type: "post",
                 url: "/Home/GetEdit",
                 data: { "": JSON.stringify(postdata) },
                 success: function (data, status) {
-                    if (status == "success") {
+                    if (data == "success") {
                         toastr.success('提交数据成功');
                         $("#tb_departments").bootstrapTable('refresh');
                     }
