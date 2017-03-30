@@ -33,7 +33,7 @@ namespace HZ.MVC.FaKa.Controllers
             NativePay nativePay = new NativePay();
 
             //生成扫码支付模式二url
-            string url = nativePay.GetPayUrl("123456789");
+            string url = nativePay.GetPayUrl("1234567890");
 
             ViewBag.QR_url = url;
             return View();
