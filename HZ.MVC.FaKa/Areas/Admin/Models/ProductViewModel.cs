@@ -27,6 +27,13 @@ namespace HZ.MVC.FaKa.Areas.Admin.Models
             get;
             set;
         }
+
+        public string ProductTypeName
+        {
+            get;
+            set;
+        }
+
         public DateTime AddedTime
         {
             get;

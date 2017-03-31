@@ -1,14 +1,14 @@
-﻿       $(function () {
+﻿$(function () {
 
-           //1.初始化Table
-           var oTable = new TableInit();
-           oTable.Init();
+    //1.初始化Table
+    var oTable = new TableInit();
+    oTable.Init();
 
-           //2.初始化Button的点击事件
-           var oButtonInit = new ButtonInit();
-           oButtonInit.Init();
+    //2.初始化Button的点击事件
+    var oButtonInit = new ButtonInit();
+    oButtonInit.Init();
 
-       });
+});
 
 
 var TableInit = function () {
@@ -16,7 +16,7 @@ var TableInit = function () {
     //初始化Table
     oTableInit.Init = function () {
         $('#tb_departments').bootstrapTable({
-            url: '/ProductType/GetProductTypes',         //请求后台的URL（*）
+            url: '/Product/GetProducts',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
             toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
@@ -44,10 +44,32 @@ var TableInit = function () {
                 checkbox: true
             }, {
                 field: 'Id',
+                title: '产品Id'
+            }, {
+                field: 'Name',
+                title: '产品名称'
+            }, {
+                field: 'Price',
+                title: '产品单价'
+            }, {
+                field: 'ProductType_Id',
                 title: '类别Id'
             }, {
-                field: 'ProductName',
+                field: 'ProductTypeName',
                 title: '类别名称'
+            }, {
+                field: 'AddedTime',
+                title: '添加时间',
+                formatter: function (value, row, index) {
+                    var time = row.UpdateTime;
+                    if (time == null) {
+                        return "";
+                    } else {
+                        var sj = parseInt(time.replace(/\D/igm, ""));
+                        var rq = new Date(sj);
+                        return rq.toLocaleDateString();
+                    }
+                }
             }, {
                 field: 'UpdateTime',
                 title: '更新时间',
@@ -83,18 +105,20 @@ var ButtonInit = function () {
     var postdata = {};
 
     oInit.Init = function () {
+
         $("#btn_add").click(function () {
             $("#myModalLabel").text("新增");
             $("#myModal").find(".form-control").val("");
             $('#myModal').modal()
 
-            postdata.Id = "";
-
             $("#myModal .btn-primary").unbind("click").click(function () {
+                postdata.Name = $("#txt_modal_productname").val();
+                postdata.Price = $("#txt_modal_price").val() * 1;
+                postdata.ProductType_Id = $("#usertype").val() * 1;
                 $.ajax({
                     type: "post",
-                    url: "/ProductType/Add",
-                    data: { "proT": $("#myModal").find(".form-control").val() },
+                    url: "/Product/Add",
+                    data: { "proT": JSON.stringify(postdata) },
                     success: function (data, status) {
                         if (data == "success") {
                             toastr.success("成功");
@@ -131,16 +155,19 @@ var ButtonInit = function () {
                 return;
             }
             $("#myModalLabel").text("编辑");
-            $("#txt_modal_departmentname").val(arrselections[0].ProductName);
+            $("#txt_modal_productname").val(arrselections[0].Name);
+            $("#txt_modal_price").val(arrselections[0].Price);
+            $("#usertype").val(arrselections[0].ProductType_Id);
             postdata.Id = arrselections[0].Id;
             $('#myModal').modal();
 
             $("#myModal .btn-primary").unbind("click").click(function () {
-                
-                postdata.ProductName = $("#txt_modal_departmentname").val();
+                postdata.Price = $("#txt_modal_price").val() * 1;
+                postdata.Name = $("#txt_modal_departmentname").val();
+                postdata.ProductType_Id = $("#usertype").val() * 1;
                 $.ajax({
                     type: "post",
-                    url: "/ProductType/Update",
+                    url: "/Product/Update",
                     data: { "proM": JSON.stringify(postdata) },
                     success: function (data, status) {
                         if (data == "success") {
@@ -148,8 +175,7 @@ var ButtonInit = function () {
                             $('#myModal').modal('hide');
                             $("#tb_departments").bootstrapTable('refresh');
                         }
-                        else if(data == "empty")
-                        {
+                        else if (data == "empty") {
                             toastr.warning("请输入有效的名称")
                         }
                         else {
@@ -167,7 +193,7 @@ var ButtonInit = function () {
         });
 
         $("#btn_delete").click(function () {
-  
+
             var arrselections = $("#tb_departments").bootstrapTable('getSelections');
             if (arrselections.length <= 0) {
                 toastr.warning('请选择有效数据');
@@ -180,7 +206,7 @@ var ButtonInit = function () {
                 }
                 $.ajax({
                     type: "post",
-                    url: "/ProductType/Delete",
+                    url: "/Product/Delete",
                     data: { "pId": JSON.stringify(arrselections) },
                     success: function (data, status) {
                         if (data == "success") {

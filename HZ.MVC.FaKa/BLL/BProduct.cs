@@ -42,9 +42,16 @@ namespace HZ.MVC.FaKa.BLL
                 return false;
         }
 
-        public static bool Update(string sql)
+        public static bool Update(ProductViewModel model)
         {
-            int count = ManagerSqlite.ExecuteNonQuery(sql, null);
+            string sql = "update Products set Name=@Name,Price=@Price,ProductType_Id=@ProductType_Id,UpdateTime=@UpdateTime where Id=@Id ";
+            List<SQLiteParameter> ps = new List<SQLiteParameter>();
+            ps.Add(new SQLiteParameter() { ParameterName = EProducts.Name.ToString(), Value = model.Name });
+            ps.Add(new SQLiteParameter() { ParameterName = EProducts.Price.ToString(), Value = model.Price });
+            ps.Add(new SQLiteParameter() { ParameterName = EProducts.ProductType_Id.ToString(), Value = model.ProductType_Id });
+            ps.Add(new SQLiteParameter() { ParameterName = EProducts.UpdateTime.ToString(), Value = model.UpdateTime });
+            ps.Add(new SQLiteParameter() { ParameterName = EProducts.Id.ToString(), Value = model.Id });
+            int count = ManagerSqlite.ExecuteNonQuery(sql, ps.ToArray());
             if (count > 0)
                 return true;
             else
@@ -62,9 +69,48 @@ namespace HZ.MVC.FaKa.BLL
                 return false;
         }
 
+        public static bool Delete(List<int> ids)
+        {
+
+            List<string> sqls = new List<string>();
+            foreach (var item in ids)
+            {
+                sqls.Add("delete from Products where Id = " + item);
+            }
+
+            return ManagerSqlite.ExecuteNonQuery(sqls, null);
+        }
+
+        public static List<ProductViewModel> SearchAll()
+        {
+            string sql = "select a.*,b.[ProductName] from Products a join ProductTypes b on a.[ProductType_Id] = b.[Id] ";
+            List<ProductViewModel> modelArr = new List<ProductViewModel>();
+
+            ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        ProductViewModel model = new ProductViewModel();
+                        model.Id = Convert.ToInt32(reader[EProducts.Id.ToString()]);
+                        model.Name = reader[EProducts.Name.ToString()].ToString();
+                        model.Price = Convert.ToDouble(reader[EProducts.Price.ToString()]);
+                        model.ProductType_Id = Convert.ToInt32(reader[EProducts.ProductType_Id.ToString()]);
+                        model.ProductTypeName = reader["ProductName"].ToString();
+                        model.AddedTime = Convert.ToDateTime(reader[EProducts.AddedTime.ToString()]);
+                        model.UpdateTime = Convert.ToDateTime(reader[EProducts.UpdateTime.ToString()]);
+                        modelArr.Add(model);
+                    }
+                }
+            }
+                ));
+            return modelArr;
+        }
+
         public static List<ProductViewModel> SearchByTypeId(string id)
         {
-            string sql = "select * from Products where ProductType_Id=" + id;
+            string sql = "select a.*,b.[ProductName] from Products a join ProductTypes b on a.[ProductType_Id] = b.[Id] where a.[ProductType_Id]=" + id;
             List<ProductViewModel> modelArr = new List<ProductViewModel>();
 
             ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
@@ -77,6 +123,7 @@ namespace HZ.MVC.FaKa.BLL
                         model.Id = Convert.ToInt32(reader[EProducts.Id.ToString()]);
                         model.Name = reader[EProducts.Name.ToString()].ToString();
                         model.ProductType_Id = Convert.ToInt32(reader[EProducts.ProductType_Id.ToString()]);
+                        model.ProductTypeName = reader["ProductName"].ToString();
                         model.Price = Convert.ToDouble(reader[EProducts.Price.ToString()]);
                         model.AddedTime = Convert.ToDateTime(reader[EProducts.AddedTime.ToString()]);
                         model.UpdateTime = Convert.ToDateTime(reader[EProducts.UpdateTime.ToString()]);
@@ -88,27 +135,30 @@ namespace HZ.MVC.FaKa.BLL
             return modelArr;
         }
 
-        public static ProductViewModel SearchBysql(string sql)
+        public static List<ProductViewModel> SearchBysql(string name)
         {
-            ProductViewModel model = new ProductViewModel();
-
+            string sql = "select a.*,b.[ProductName] from Products a join ProductTypes b on a.[ProductType_Id] = b.[Id] where a.[Name] like '%" + name + "%'";
+            List<ProductViewModel> modelArr = new List<ProductViewModel>();
             ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
             {
                 if (reader != null)
                 {
                     while (reader.Read())
                     {
+                        ProductViewModel model = new ProductViewModel();
                         model.Id = Convert.ToInt32(reader[EProducts.Id.ToString()]);
                         model.Name = reader[EProducts.Name.ToString()].ToString();
                         model.ProductType_Id = Convert.ToInt32(reader[EProducts.ProductType_Id.ToString()]);
+                        model.ProductTypeName = reader["ProductName"].ToString();
                         model.Price = Convert.ToDouble(reader[EProducts.Price.ToString()]);
                         model.AddedTime = Convert.ToDateTime(reader[EProducts.AddedTime.ToString()]);
                         model.UpdateTime = Convert.ToDateTime(reader[EProducts.UpdateTime.ToString()]);
+                        modelArr.Add(model);
                     }
                 }
             }
                 ));
-            return model;
+            return modelArr;
         }
 
         public static object ExecuteSql(string sql)

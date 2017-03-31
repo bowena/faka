@@ -200,6 +200,7 @@
     <Compile Include="Areas\Admin\Models\Enum\EProduct.cs" />
     <Compile Include="Areas\Admin\Models\Enum\EProductTypes.cs" />
     <Compile Include="Areas\Admin\Models\Enum\EUsers.cs" />
+    <Compile Include="Areas\Admin\Models\Enum\ReturnMsg.cs" />
     <Compile Include="Areas\Admin\Models\KaMiViewModel.cs" />
     <Compile Include="Areas\Admin\Models\OrderViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductTypeViewModel.cs" />
@@ -245,7 +246,11 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Scripts\Admin\KaMi\Index.js" />
+    <Content Include="Scripts\Admin\Order\Index.js" />
     <Content Include="Scripts\Admin\ProductType\Index.js" />
+    <Content Include="Scripts\Admin\Product\Index.js" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\locale\bootstrap-table-af-ZA.js" />
     <Content Include="Scripts\locale\bootstrap-table-ar-SA.js" />
     <Content Include="Scripts\locale\bootstrap-table-ca-ES.js" />
@@ -365,7 +370,7 @@
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ProductType\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\ProductType\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Scripts\locale\bootstrap-table-en-US.js.template" />
     <Content Include="Scripts\locale\README.md" />
     <None Include="Properties\PublishProfiles\faka.pubxml" />

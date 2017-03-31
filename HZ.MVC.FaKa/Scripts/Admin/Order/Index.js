@@ -1,14 +1,14 @@
-﻿       $(function () {
+﻿$(function () {
 
-           //1.初始化Table
-           var oTable = new TableInit();
-           oTable.Init();
+    //1.初始化Table
+    var oTable = new TableInit();
+    oTable.Init();
 
-           //2.初始化Button的点击事件
-           var oButtonInit = new ButtonInit();
-           oButtonInit.Init();
+    //2.初始化Button的点击事件
+    var oButtonInit = new ButtonInit();
+    oButtonInit.Init();
 
-       });
+});
 
 
 var TableInit = function () {
@@ -136,7 +136,7 @@ var ButtonInit = function () {
             $('#myModal').modal();
 
             $("#myModal .btn-primary").unbind("click").click(function () {
-                
+
                 postdata.ProductName = $("#txt_modal_departmentname").val();
                 $.ajax({
                     type: "post",
@@ -148,8 +148,7 @@ var ButtonInit = function () {
                             $('#myModal').modal('hide');
                             $("#tb_departments").bootstrapTable('refresh');
                         }
-                        else if(data == "empty")
-                        {
+                        else if (data == "empty") {
                             toastr.warning("请输入有效的名称")
                         }
                         else {
@@ -167,7 +166,7 @@ var ButtonInit = function () {
         });
 
         $("#btn_delete").click(function () {
-  
+
             var arrselections = $("#tb_departments").bootstrapTable('getSelections');
             if (arrselections.length <= 0) {
                 toastr.warning('请选择有效数据');

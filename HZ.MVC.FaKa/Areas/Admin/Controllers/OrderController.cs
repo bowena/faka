@@ -13,6 +13,7 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.title = "订单管理";
             return View();
         }
 

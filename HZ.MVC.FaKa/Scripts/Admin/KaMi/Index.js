@@ -1,14 +1,14 @@
-﻿       $(function () {
+﻿$(function () {
 
-           //1.初始化Table
-           var oTable = new TableInit();
-           oTable.Init();
+    //1.初始化Table
+    var oTable = new TableInit();
+    oTable.Init();
 
-           //2.初始化Button的点击事件
-           var oButtonInit = new ButtonInit();
-           oButtonInit.Init();
+    //2.初始化Button的点击事件
+    var oButtonInit = new ButtonInit();
+    oButtonInit.Init();
 
-       });
+});
 
 
 var TableInit = function () {
@@ -16,7 +16,7 @@ var TableInit = function () {
     //初始化Table
     oTableInit.Init = function () {
         $('#tb_departments').bootstrapTable({
-            url: '/ProductType/GetProductTypes',         //请求后台的URL（*）
+            url: '/KaMi/GetKaMis',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
             toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
@@ -44,23 +44,25 @@ var TableInit = function () {
                 checkbox: true
             }, {
                 field: 'Id',
+                title: '卡密Id'
+            }, {
+                field: 'Content',
+                title: '卡密内容'
+            }, {
+                field: 'ProductType_Id',
                 title: '类别Id'
             }, {
-                field: 'ProductName',
+                field: 'ProductTypeName',
                 title: '类别名称'
             }, {
-                field: 'UpdateTime',
-                title: '更新时间',
-                formatter: function (value, row, index) {
-                    var time = row.UpdateTime;
-                    if (time == null) {
-                        return "";
-                    } else {
-                        var sj = parseInt(time.replace(/\D/igm, ""));
-                        var rq = new Date(sj);
-                        return rq.toLocaleDateString();
-                    }
-                }
+                field: 'Product_Id',
+                title: '产品Id'
+            }, {
+                field: 'ProductName',
+                title: '产品名称'
+            }, {
+                field: 'Remark',
+                title: '备注'
             }, ]
         });
     };
@@ -81,7 +83,6 @@ var TableInit = function () {
 var ButtonInit = function () {
     var oInit = new Object();
     var postdata = {};
-
     oInit.Init = function () {
         $("#btn_add").click(function () {
             $("#myModalLabel").text("新增");
@@ -93,7 +94,7 @@ var ButtonInit = function () {
             $("#myModal .btn-primary").unbind("click").click(function () {
                 $.ajax({
                     type: "post",
-                    url: "/ProductType/Add",
+                    url: "/KaMi/Add",
                     data: { "proT": $("#myModal").find(".form-control").val() },
                     success: function (data, status) {
                         if (data == "success") {
@@ -136,11 +137,11 @@ var ButtonInit = function () {
             $('#myModal').modal();
 
             $("#myModal .btn-primary").unbind("click").click(function () {
-                
+
                 postdata.ProductName = $("#txt_modal_departmentname").val();
                 $.ajax({
                     type: "post",
-                    url: "/ProductType/Update",
+                    url: "/KaMi/Update",
                     data: { "proM": JSON.stringify(postdata) },
                     success: function (data, status) {
                         if (data == "success") {
@@ -148,8 +149,7 @@ var ButtonInit = function () {
                             $('#myModal').modal('hide');
                             $("#tb_departments").bootstrapTable('refresh');
                         }
-                        else if(data == "empty")
-                        {
+                        else if (data == "empty") {
                             toastr.warning("请输入有效的名称")
                         }
                         else {
@@ -167,7 +167,7 @@ var ButtonInit = function () {
         });
 
         $("#btn_delete").click(function () {
-  
+
             var arrselections = $("#tb_departments").bootstrapTable('getSelections');
             if (arrselections.length <= 0) {
                 toastr.warning('请选择有效数据');
@@ -180,7 +180,7 @@ var ButtonInit = function () {
                 }
                 $.ajax({
                     type: "post",
-                    url: "/ProductType/Delete",
+                    url: "/KaMi/Delete",
                     data: { "pId": JSON.stringify(arrselections) },
                     success: function (data, status) {
                         if (data == "success") {
@@ -199,16 +199,20 @@ var ButtonInit = function () {
             });
         });
 
-        $("#btn_submit").click(function () {
-            postdata.ProductName = $("#txt_modal_departmentname").val();
+        $("#txt_modal_productType").change(function () {
+            $("#txt_modal_product").empty();
             $.ajax({
                 type: "post",
-                url: "/Home/GetEdit",
-                data: { "": JSON.stringify(postdata) },
-                success: function (data, status) {
-                    if (data == "success") {
-                        toastr.success('提交数据成功');
-                        $("#tb_departments").bootstrapTable('refresh');
+                url: "/KaMi/InitProduct",
+                data: { "proT": this.value },
+                success: function (data) {
+
+                    var proList = eval(data);
+                    if (proList.length > 0) {
+                       
+                        $(proList).each(function (i) {
+                            $("#txt_modal_product").append("<option value='" + this.Id + "'>"+ this.Name +"</option>");
+                        });
                     }
                 },
                 error: function () {
@@ -217,8 +221,8 @@ var ButtonInit = function () {
                 complete: function () {
 
                 }
-
             });
+
         });
 
         $("#btn_query").click(function () {

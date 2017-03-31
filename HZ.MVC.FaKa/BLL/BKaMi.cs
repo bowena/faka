@@ -21,6 +21,7 @@ namespace HZ.MVC.FaKa.BLL
              + EKamis.Content.ToString() + ","
              + EKamis.State.ToString() + ","
              + EKamis.Product_Id.ToString() + ","
+             + EKamis.ProductType_Id.ToString() + ","
              + EKamis.Remark.ToString() + ","
              + EKamis.AddedTime.ToString() + ","
              + EKamis.UpdateTime.ToString()
@@ -28,6 +29,7 @@ namespace HZ.MVC.FaKa.BLL
              + "@" + EKamis.Content.ToString() + ","
              + "@" + EKamis.State.ToString() + ","
              + "@" + EKamis.Product_Id.ToString() + ","
+             + "@" + EKamis.ProductType_Id.ToString() + ","
              + "@" + EKamis.Remark.ToString() + ","
              + "@" + EKamis.AddedTime.ToString() + ","
              + "@" + EKamis.UpdateTime.ToString()
@@ -36,10 +38,11 @@ namespace HZ.MVC.FaKa.BLL
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.Content.ToString(), Value = model.Content });
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.State.ToString(), Value = model.State });
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.Product_Id.ToString(), Value = model.Product_Id });
+            ps.Add(new SQLiteParameter() { ParameterName = EKamis.ProductType_Id.ToString(), Value = model.ProductType_Id });
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.Remark.ToString(), Value = model.Remark });
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.AddedTime.ToString(), Value = model.AddedTime });
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.UpdateTime.ToString(), Value = model.UpdateTime });
-            
+
             int count = ManagerSqlite.ExecuteNonQuery(sql, ps.ToArray());
             if (count > 0)
                 return true;
@@ -63,6 +66,8 @@ namespace HZ.MVC.FaKa.BLL
             sb.Append(EKamis.Product_Id.ToString() + "=@" + EKamis.Product_Id.ToString() + ",");
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.Product_Id.ToString(), Value = model.Product_Id });
 
+            sb.Append(EKamis.ProductType_Id.ToString() + "=@" + EKamis.ProductType_Id.ToString() + ",");
+            ps.Add(new SQLiteParameter() { ParameterName = EKamis.ProductType_Id.ToString(), Value = model.ProductType_Id });
 
             sb.Append(EKamis.Remark.ToString() + "=@" + EKamis.Remark.ToString() + ",");
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.Remark.ToString(), Value = model.Remark });
@@ -110,6 +115,7 @@ namespace HZ.MVC.FaKa.BLL
                         model.Content = reader[EKamis.Content.ToString()].ToString();
                         model.State = Convert.ToInt32(reader[EKamis.State.ToString()]);
                         model.Product_Id = Convert.ToInt32(reader[EKamis.Product_Id.ToString()]);
+                        model.ProductType_Id = Convert.ToInt32(reader[EKamis.ProductType_Id.ToString()]);
                         model.AddedTime = Convert.ToDateTime(reader[EKamis.AddedTime.ToString()]);
                         model.UpdateTime = Convert.ToDateTime(reader[EKamis.UpdateTime.ToString()]);
                         model.Remark = reader[EKamis.UpdateTime.ToString()].ToString();
@@ -137,6 +143,7 @@ namespace HZ.MVC.FaKa.BLL
                             model.Content = reader[EKamis.Content.ToString()].ToString();
                             model.State = Convert.ToInt32(reader[EKamis.State.ToString()]);
                             model.Product_Id = Convert.ToInt32(reader[EKamis.Product_Id.ToString()]);
+                            model.ProductType_Id = Convert.ToInt32(reader[EKamis.ProductType_Id.ToString()]);
                             model.AddedTime = Convert.ToDateTime(reader[EKamis.AddedTime.ToString()]);
                             model.UpdateTime = Convert.ToDateTime(reader[EKamis.UpdateTime.ToString()]);
                             model.Remark = reader[EKamis.Remark.ToString()].ToString();

@@ -27,6 +27,11 @@ namespace HZ.MVC.FaKa.Areas.Admin.Models
             get;
             set;
         }
+        public int ProductType_Id
+        {
+            get;
+            set;
+        }
         public string Remark
         {
             get;

@@ -1,4 +1,5 @@
 ﻿using HZ.MVC.FaKa.Areas.Admin.Models;
+using HZ.MVC.FaKa.Areas.Admin.Models.Enum;
 using HZ.MVC.FaKa.BLL;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
         public ActionResult Index()
         {
 
-
+            ViewBag.title = "类型管理";
 
             return View();
         }
@@ -37,17 +38,21 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
         public ActionResult Add()
         {
             string name = Request.Form["proT"];
+            if(string.IsNullOrEmpty(name))
+            {
+                return Content(ReturnMsg.empty.ToString());
+            }
             ProductTypeViewModel model = new ProductTypeViewModel();
             model.ProductName = name;
             model.UpdateTime = DateTime.Now;
             bool isSucc = BProductType.Insert(model);
             if (isSucc)
             {
-                return Content("success");
+                return Content(ReturnMsg.success.ToString());
             }
             else
             {
-                return Content("fail");
+                return Content(ReturnMsg.fail.ToString());
             }
         }
 
@@ -58,17 +63,17 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
             List<DeleteId> models = LitJson.JsonMapper.ToObject<List<DeleteId>>(name);
             if (models == null)
             {
-                return Content("fail");
+                return Content(ReturnMsg.fail.ToString());
             }
 
             bool isSucc = BProductType.Delete(models.Select(_ => _.Id).ToList());
             if (isSucc)
             {
-                return Content("success");
+                return Content(ReturnMsg.success.ToString());
             }
             else
             {
-                return Content("fail");
+                return Content(ReturnMsg.fail.ToString());
             }
         }
 
@@ -80,15 +85,19 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
             model.UpdateTime = DateTime.Now;
             if (model == null)
             {
-                return Content("fail");
+                return Content(ReturnMsg.fail.ToString());
+            }
+            if (string.IsNullOrEmpty(model.ProductName))
+            {
+                return Content(ReturnMsg.empty.ToString());
             }
             if (BProductType.Update(model))
             {
-                return Content("success");
+                return Content(ReturnMsg.success.ToString());
             }
             else
             {
-                return Content("fail");
+                return Content(ReturnMsg.fail.ToString());
             }
         }
 

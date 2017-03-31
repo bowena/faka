@@ -23,6 +23,7 @@ namespace HZ.MVC.FaKa.Areas.Admin.Models.Enum
         ///Kamis表:Product_Id字段
         /// </summary>
         Product_Id,
+        ProductType_Id,
         /// <summary>
         ///Kamis表:Remark字段
         /// </summary>
