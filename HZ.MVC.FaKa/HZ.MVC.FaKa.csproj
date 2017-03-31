@@ -246,6 +246,7 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Images\wx.png" />
     <Content Include="Scripts\Admin\KaMi\Index.js" />
     <Content Include="Scripts\Admin\Order\Index.js" />
     <Content Include="Scripts\Admin\ProductType\Index.js" />

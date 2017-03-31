@@ -89,13 +89,15 @@ var ButtonInit = function () {
             $("#myModal").find(".form-control").val("");
             $('#myModal').modal()
 
-            postdata.Id = "";
-
             $("#myModal .btn-primary").unbind("click").click(function () {
+                postdata.Content = $("#txt_modal_content").val();//txt_modal_content
+                postdata.Product_Id = $("#txt_modal_product").val() * 1;
+                postdata.ProductType_Id = $("#txt_modal_productType").val() * 1;
+                postdata.Remark = $("#txt_modal_remark").val();
                 $.ajax({
                     type: "post",
                     url: "/KaMi/Add",
-                    data: { "proT": $("#myModal").find(".form-control").val() },
+                    data: { "proT": JSON.stringify(postdata) },
                     success: function (data, status) {
                         if (data == "success") {
                             toastr.success("成功");
@@ -132,13 +134,18 @@ var ButtonInit = function () {
                 return;
             }
             $("#myModalLabel").text("编辑");
-            $("#txt_modal_departmentname").val(arrselections[0].ProductName);
+            $("#txt_modal_content").val(arrselections[0].Content);
+            $("#txt_modal_remark").val(arrselections[0].Remark);
+            //$("#txt_modal_productType").val(arrselections[0].ProductType_Id);
+            //$("#txt_modal_product").val(arrselections[0].Product_Id);
             postdata.Id = arrselections[0].Id;
             $('#myModal').modal();
 
             $("#myModal .btn-primary").unbind("click").click(function () {
-
-                postdata.ProductName = $("#txt_modal_departmentname").val();
+                postdata.Content = $("#txt_modal_content").val();
+                postdata.Remark = $("#txt_modal_remark").val();
+                postdata.ProductType_Id = $("#txt_modal_productType").val() * 1;
+                postdata.Product_Id = $("#txt_modal_product").val() * 1;
                 $.ajax({
                     type: "post",
                     url: "/KaMi/Update",

@@ -88,20 +88,20 @@ namespace HZ.MVC.FaKa.BLL
                 return false;
         }
 
-        public static bool Delete(int id)
+        public static bool Delete(List<int> ids)
         {
-            string sql = "delete from Kamis where Id = " + id;
+            List<string> sqls = new List<string>();
+            foreach (var item in ids)
+            {
+                sqls.Add("delete from Kamis where Id = " + item);
+            }
 
-            int count = ManagerSqlite.ExecuteNonQuery(sql, null);
-            if (count > 0)
-                return true;
-            else
-                return false;
+            return ManagerSqlite.ExecuteNonQuery(sqls, null);
         }
 
-        public static List<KaMiViewModel> Search()
+        public static List<KaMiViewModel> SearchAll()
         {
-            string sql = "select * from Kamis ";
+            string sql = "select a.*,b.Name,c.ProductName FROM Kamis a JOIN Products b on a.Product_Id = b.Id JOIN ProductTypes c on a.ProductType_Id = c.Id ";
 
             List<KaMiViewModel> modelArr = new List<KaMiViewModel>();
             ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
@@ -115,10 +115,41 @@ namespace HZ.MVC.FaKa.BLL
                         model.Content = reader[EKamis.Content.ToString()].ToString();
                         model.State = Convert.ToInt32(reader[EKamis.State.ToString()]);
                         model.Product_Id = Convert.ToInt32(reader[EKamis.Product_Id.ToString()]);
+                        model.ProductName = reader["Name"].ToString();
                         model.ProductType_Id = Convert.ToInt32(reader[EKamis.ProductType_Id.ToString()]);
+                        model.ProductTypeName = reader["ProductName"].ToString();
                         model.AddedTime = Convert.ToDateTime(reader[EKamis.AddedTime.ToString()]);
                         model.UpdateTime = Convert.ToDateTime(reader[EKamis.UpdateTime.ToString()]);
-                        model.Remark = reader[EKamis.UpdateTime.ToString()].ToString();
+                        model.Remark = reader[EKamis.Remark.ToString()].ToString();
+                        modelArr.Add(model);
+                    }
+                }
+            }
+                ));
+            return modelArr;
+        }
+
+        public static List<KaMiViewModel> SearchBysql(string name)
+        {
+            string sql = "select a.*,b.Name,c.ProductName FROM Kamis a JOIN Products b on a.Product_Id = b.Id JOIN ProductTypes c on a.ProductType_Id = c.Id where a.[Content] like '%" + name + "%'";
+            List<KaMiViewModel> modelArr = new List<KaMiViewModel>();
+            ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        KaMiViewModel model = new KaMiViewModel();
+                        model.Id = Convert.ToInt32(reader[EKamis.Id.ToString()]);
+                        model.Content = reader[EKamis.Content.ToString()].ToString();
+                        model.State = Convert.ToInt32(reader[EKamis.State.ToString()]);
+                        model.Product_Id = Convert.ToInt32(reader[EKamis.Product_Id.ToString()]);
+                        model.ProductName = reader["Name"].ToString();
+                        model.ProductType_Id = Convert.ToInt32(reader[EKamis.ProductType_Id.ToString()]);
+                        model.ProductTypeName = reader["ProductName"].ToString();
+                        model.AddedTime = Convert.ToDateTime(reader[EKamis.AddedTime.ToString()]);
+                        model.UpdateTime = Convert.ToDateTime(reader[EKamis.UpdateTime.ToString()]);
+                        model.Remark = reader[EKamis.Remark.ToString()].ToString();
                         modelArr.Add(model);
                     }
                 }

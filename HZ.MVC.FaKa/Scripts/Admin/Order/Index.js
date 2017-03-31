@@ -16,7 +16,7 @@ var TableInit = function () {
     //初始化Table
     oTableInit.Init = function () {
         $('#tb_departments').bootstrapTable({
-            url: '/ProductType/GetProductTypes',         //请求后台的URL（*）
+            url: '/Order/GetOrders',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
             toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
@@ -44,10 +44,13 @@ var TableInit = function () {
                 checkbox: true
             }, {
                 field: 'Id',
-                title: '类别Id'
+                title: 'Id'
             }, {
-                field: 'ProductName',
-                title: '类别名称'
+                field: 'NO',
+                title: '订单号'
+            }, {
+                field: 'PayType',
+                title: '支付类型'
             }, {
                 field: 'UpdateTime',
                 title: '更新时间',
@@ -83,40 +86,7 @@ var ButtonInit = function () {
     var postdata = {};
 
     oInit.Init = function () {
-        $("#btn_add").click(function () {
-            $("#myModalLabel").text("新增");
-            $("#myModal").find(".form-control").val("");
-            $('#myModal').modal()
-
-            postdata.Id = "";
-
-            $("#myModal .btn-primary").unbind("click").click(function () {
-                $.ajax({
-                    type: "post",
-                    url: "/ProductType/Add",
-                    data: { "proT": $("#myModal").find(".form-control").val() },
-                    success: function (data, status) {
-                        if (data == "success") {
-                            toastr.success("成功");
-                            $('#myModal').modal('hide');
-                            $("#tb_departments").bootstrapTable('refresh');
-                        }
-                        else if (data == "empty") {
-                            toastr.warning("请输入有效的名称")
-                        }
-                        else {
-                            toastr.error("失败，请重试")
-                        }
-                    },
-                    error: function () {
-                        toastr.error('Error');
-                    },
-                    complete: function () {
-
-                    }
-                });
-            });
-        });
+       
 
         $("#btn_edit").click(function () {
             var arrselections = $("#tb_departments").bootstrapTable('getSelections');
@@ -140,7 +110,7 @@ var ButtonInit = function () {
                 postdata.ProductName = $("#txt_modal_departmentname").val();
                 $.ajax({
                     type: "post",
-                    url: "/ProductType/Update",
+                    url: "/Order/Update",
                     data: { "proM": JSON.stringify(postdata) },
                     success: function (data, status) {
                         if (data == "success") {
@@ -179,7 +149,7 @@ var ButtonInit = function () {
                 }
                 $.ajax({
                     type: "post",
-                    url: "/ProductType/Delete",
+                    url: "/Order/Delete",
                     data: { "pId": JSON.stringify(arrselections) },
                     success: function (data, status) {
                         if (data == "success") {
@@ -195,28 +165,6 @@ var ButtonInit = function () {
                     }
 
                 });
-            });
-        });
-
-        $("#btn_submit").click(function () {
-            postdata.ProductName = $("#txt_modal_departmentname").val();
-            $.ajax({
-                type: "post",
-                url: "/Home/GetEdit",
-                data: { "": JSON.stringify(postdata) },
-                success: function (data, status) {
-                    if (data == "success") {
-                        toastr.success('提交数据成功');
-                        $("#tb_departments").bootstrapTable('refresh');
-                    }
-                },
-                error: function () {
-                    toastr.error('Error');
-                },
-                complete: function () {
-
-                }
-
             });
         });
 

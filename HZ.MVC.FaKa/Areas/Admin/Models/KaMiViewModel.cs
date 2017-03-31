@@ -22,7 +22,17 @@ namespace HZ.MVC.FaKa.Areas.Admin.Models
             get;
             set;
         }
+        public string ProductName
+        {
+            get;
+            set;
+        }
         public int Product_Id
+        {
+            get;
+            set;
+        }
+        public string ProductTypeName
         {
             get;
             set;
