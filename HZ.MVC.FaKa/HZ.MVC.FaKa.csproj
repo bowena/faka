@@ -252,6 +252,7 @@
     <Content Include="Scripts\Admin\ProductType\Index.js" />
     <Content Include="Scripts\Admin\Product\Index.js" />
     <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\layer.js" />
     <Content Include="Scripts\locale\bootstrap-table-af-ZA.js" />
     <Content Include="Scripts\locale\bootstrap-table-ar-SA.js" />
     <Content Include="Scripts\locale\bootstrap-table-ca-ES.js" />
