@@ -441,6 +441,7 @@
     <Content Include="Views\WxPay\Order.cshtml" />
     <Content Include="Views\WxPay\KaMiList.cshtml" />
     <Content Include="Views\WxPay\GetPayResult.cshtml" />
+    <Content Include="Views\Home\Confirm.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

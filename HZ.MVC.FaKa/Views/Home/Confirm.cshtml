@@ -1,0 +1,218 @@
+﻿@{
+    ViewBag.Title = "Confirm";
+}
+<link rel="stylesheet" href="https://sp.jd.com/payment/1.2.0/css/bankList.css" charset="utf-8">
+<link type="text/css" rel="stylesheet" href="https://misc.360buyimg.com/user/purchase/2.0.0/widget/??common/common.css,header-2015/header-2015.css,consignee-scroll/consignee-scroll.css,payment-step/payment-step.css,presale-step/presale-step.css,shopping-list/shopping-list.css,invoice-step/invoice-step.css,order-virtual/order-virtual.css,order-summary/order-summary.css,checkout-floatbar/checkout-floatbar.css,paypwd/paypwd.css,/delivery-calendar-freight/delivery-calendar-freight.css,backpanel/backpanel.css" source="widget">
+<link type="text/css" rel="stylesheet" href="https://misc.360buyimg.com/jdf/1.0.0/unit/??ui-base/1.0.0/ui-base.css,shortcut/2.0.0/shortcut.css,global-header/1.0.0/global-header.css,myjd/2.0.0/myjd.css,nav/2.0.0/nav.css,shoppingcart/2.0.0/shoppingcart.css,global-footer/1.0.0/global-footer.css,service/1.0.0/service.css">
+<link charset="utf-8" rel="stylesheet" href="https://misc.360buyimg.com/jdf/1.0.0/ui/tips/1.0.0/tips.css">
+<style type="text/css">
+    .wq-list {
+        padding: 10px 0px;
+    }
+
+    .method-list-p {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 10px;
+        color: #a9afb5 !important;
+        text-align: left !important;
+    }
+
+    .method-list {
+        list-style: none;
+        margin-bottom: 0;
+        padding-left: 0;
+    }
+
+        .method-list .method-alipay {
+            display: inline;
+            float: left;
+            margin: 0 20px;
+        }
+
+        .method-list .method-box {
+            border: 1px solid #CCC;
+            padding: 11px 12px;
+            cursor: pointer;
+        }
+
+        .method-list .method-radio {
+            display: none;
+        }
+
+        .method-list .method-alipay .method-box.method-current {
+            background-color: #EFF9FF;
+            border-color: #00AAEE;
+        }
+
+        .method-list .method-qqpay {
+            display: inline;
+            float: left;
+            margin: 0 0px 0px 0;
+        }
+
+    label {
+        font-weight: 300;
+    }
+
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .method-list .method-qqpay .method-box.method-current {
+        background-color: #EFF9FF;
+        border-color: #00AAEE;
+    }
+
+    .method-list .method-box.method-current {
+        border-width: 2px;
+        padding: 10px 11px;
+        border-color: #f37800;
+        background-color: #FFF6E7;
+    }
+
+
+</style>
+<div id="container">
+    <div id="content" class="w">
+        <!-- <div class="m"> -->
+        <div class="orderInfo-tip hide" style="display: none;">
+            <span class="wicon"></span>
+            <span class="ftx-03"> 温馨提示：订单中存在不支持7天无理由退换商品，请确认相关商品信息后提交订单。</span>
+            <span class="cls-btn" onclick="closeorderInfotip()">x</span>
+        </div>
+        <div class="checkout-tit">
+            <span class="tit-txt">填写并核对订单信息</span>
+        </div>
+       
+        <div class="checkout-steps">
+           
+            <div class="step-tit">
+                <h3>订单信息</h3>
+            </div>
+            <div class="hr"></div>
+            <div class="step-cont">
+                <div id="consignee-addr" class="consignee-content">
+                    <div class="consignee-scrollbar">
+                        <div class="ui-scrollbar-main">
+                            <div class="consignee-scroll">
+                                <div class="consignee-cont" id="consignee1">
+                                    <p>订单名称:<font color="red" style="padding:0 10px;">asdasd</font></p>
+                                    <p>订单数量:<font color="red" style="padding:0 10px;">asdasd</font></p>
+                                    <p>订单价格:<font color="red" style="padding:0 10px;">asdasd</font></p>
+                                    <p>订 单 号:<font color="red" style="padding:0 10px;">asdasd</font></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="hr"></div>
+            
+            <div id="shipAndSkuInfo">
+                <div id="payShipAndSkuInfo">
+                    <div class="step-tit">
+                        <h3>支付方式</h3>
+                    </div>
+                    <div class="hr"></div>
+                    <div class="step-cont">
+                        <div class="payment-list" id="">
+                            <div class="list-cont">
+                               
+                                    <ul class="method-list clearfix">
+                                        <li class="method-alipay">
+                                            <input type="radio" name="paytype" value="3" class="method-radio" id="qqpay" checked="checked">
+                                            <label class="method-box method-current" for="qqpay">
+                                                <img src="/Images/wx.png" alt="使用微信支付" width="94">
+                                            </label>
+                                        </li>
+                                        <li class="method-qqpay">
+                                            <input type="radio" name="paytype" value="2" class="method-radio" id="alipay">
+                                            <label class="method-box" for="alipay">
+                                                <img src="/Images/alipay.png" alt="使用支付宝支付" width="94">
+                                            </label>
+                                        </li>
+                                    </ul>
+
+                                
+                               
+                            </div>
+                        </div>
+                    </div>
+             
+                </div>
+            </div>
+            
+      
+  
+        </div>
+      
+        <div class="order-summary">
+           
+            <div class="statistic fr">
+                <div class="list">
+                    <span><em class="ftx-01">1</em> 件商品，总商品金额：</span>
+                    <em class="price" id="warePriceId" v="799">￥799.00</em>
+                </div>
+
+            </div>
+            <div class="clr"></div>
+        </div>
+
+        <div class="trade-foot">
+            <div class="trade-foot-detail-com">
+                <div class="fc-price-info">
+                    <span class="price-tit">应付总额：</span>
+                    <span class="price-num" id="sumPayPriceId">￥799.00</span>
+                </div>
+           
+                <div class="fc-consignee-info"> 
+                    <span id="sendMobile">收货人：455531105@qq.com</span>
+                </div>
+            </div>
+
+            <div id="checkout-floatbar" class="group">
+                <div class="ui-ceilinglamp checkout-buttons">
+                    <div class="sticky-placeholder hide" style="display: none;">
+                    </div>
+                    <div class="sticky-wrap">
+                        <div class="inner">
+                            <button type="submit" class="checkout-submit" id="order-submit">
+                                提交订单<b></b>
+                            </button>
+
+                            <span id="checkCodeDiv"></span>
+                            <div class="checkout-submit-tip" id="changeAreaAndPrice" style="display: none;">
+                                由于价格可能发生变化，请核对后再提交订单
+                            </div>
+                        </div>
+                        <span id="submit_message" style="display:none" class="submit-error"></span>
+                        <div class="submit-check-info" id="submit_check_info_message" style="display:none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="http://og0chum3v.bkt.clouddn.com/jquery.js"></script>
+<script type="text/javascript">
+    $('.amount-list > li').click(function () {
+        for (var i = 0; i < $('.amount-list > li').length; i++) {
+            $('.amount-list > li').eq(i).children('.amount-box').removeClass('amount-current');
+        }
+        $(this).children('.amount-box').addClass('amount-current');
+        $("#amount").val($(this).children('.amount-radio').val());
+    });
+    $('.method-list > li').click(function () {
+        for (var i = 0; i < $('.method-list > li').length; i++) {
+            $('.method-list > li').eq(i).children('.method-box').removeClass('method-current');
+        }
+        $(this).children('.method-box').addClass('method-current');
+        $("#method").val($(this).children('.method-radio').val());
+    });
+</script>
