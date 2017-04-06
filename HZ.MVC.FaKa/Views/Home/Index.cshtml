@@ -3,6 +3,7 @@
     ViewBag.Title = "购前必看：";
 }
 <link rel="stylesheet" href="/Content/bootstrap.css" />
+<link rel="stylesheet" href="/Content/layer.css" />
 <link rel="stylesheet" href="http://www.bootcss.com/p/buttons/css/buttons.css">
 <style>
     .goods:hover {
@@ -149,7 +150,7 @@
     }
 
     table {
-        width: 1024px;
+        width: 950px;
         text-align: left;
         font-family: "微软雅黑";
     }
@@ -190,10 +191,10 @@
     </section>
 }
 
-<table cellpadding="10" width="1024">
+<table cellpadding="10" width="900">
     <tbody>
         <tr bgcolor="#3CABEB">
-            <th>
+            <th style="text-align:center">
                 商品名称
             </th>
             <th>
@@ -218,25 +219,25 @@
             foreach (var item in allPros)
             {
                 <tr>
-                    <td class="goods" onclick="tips('@item.Name','@item.Price')">
+                    <td class="goods" onclick="tips('@item.Name','@item.Price')" width="550">
                         <font size="2">@item.Name</font>
                     </td>
-                    <td>
-                        <font title="物品单价" color="#FF5400">@(item.Price)元</font> 
+                    <td width="60">
+                        <font title="物品单价" color="#FF5400">@(item.Price)元</font>
                     </td>
-                    <td>
-                        <font title="物品库存" color="#0000FF">19个</font>
+                    <td width="60">
+                        <font title="物品库存" color="#0000FF">@(item.KamiNum)个</font>
                     </td>
-                    <td>
-                        <span class="am-btn-xs" onclick="goodsjian(true,'109','19')"> - </span>
-                        <input class="am-num" id="id109" value="1" type="text">
-                        <sapn class="am-btn-xs" onclick="goodsjian(false,'109','19')"> + </sapn>
+                    <td width="80">
+                        <span class="am-btn-xs" onclick="goodsjian(true,'@item.Id','@item.KamiNum')"> - </span>
+                        <input class="am-num" id="id@(item.Id)" value="0" type="text">
+                        <sapn class="am-btn-xs" onclick="goodsjian(false,'@item.Id','@item.KamiNum')"> + </sapn>
                     </td>
-                    <td>
-                        <input class="am-num" id="mail109" value="" placeholder="请填写邮箱地址" style="width:120px;" type="text">
+                    <td width="120">
+                        <input class="am-num" id="mail@(item.Id)" value="" placeholder="请填写邮箱地址" style="width:120px;" type="text">
                     </td>
-                    <td>
-                        <a class="button button-primary button-square button-small">购买</a>
+                    <td width="40">
+                        <a class="button button-primary button-square button-small" onclick="goodsbuy('@item.Id','@item.KamiNum')">购买</a>
                     </td>
                 </tr>
             }
@@ -263,7 +264,7 @@
             alert('请填写接收邮箱')
             return;
         }
-        location.href = "home/index/confirm?mail=" + $objmail.value + "&id=" + id + "&num=" + $obj.value + "&t=" + Math.random();
+        location.href = "/Home/Confirm?mail=" + $objmail.value + "&id=" + id + "&num=" + $obj.value + "&t=" + Math.random();
 
     }
     function goodsjian(bool, id, kucun) {

@@ -22,6 +22,11 @@ namespace HZ.MVC.FaKa.Areas.Admin.Models
             get;
             set;
         }
+        public int KamiNum
+        {
+            get;
+            set;
+        }
         public int ProductType_Id
         {
             get;

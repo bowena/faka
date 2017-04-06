@@ -30,6 +30,13 @@ namespace HZ.MVC.FaKa.Controllers
         /// <returns></returns>
         public ActionResult Order()
         {
+            string proId = Request.Form["proId"];
+            string orderNo = Request.Form["orderNo"];
+            string price = Request.Form["price"];
+            string num = Request.Form["num"];
+            string email = Request.Form["email"];
+
+
             NativePay nativePay = new NativePay();
 
             //生成扫码支付模式二url

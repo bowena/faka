@@ -83,7 +83,7 @@ namespace HZ.MVC.FaKa.BLL
 
         public static List<ProductViewModel> SearchAll()
         {
-            string sql = "select a.*,b.[ProductName] from Products a join ProductTypes b on a.[ProductType_Id] = b.[Id] ";
+            string sql = "select * from AllProsView ";
             List<ProductViewModel> modelArr = new List<ProductViewModel>();
 
             ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
@@ -96,6 +96,7 @@ namespace HZ.MVC.FaKa.BLL
                         model.Id = Convert.ToInt32(reader[EProducts.Id.ToString()]);
                         model.Name = reader[EProducts.Name.ToString()].ToString();
                         model.Price = Convert.ToDouble(reader[EProducts.Price.ToString()]);
+                        model.KamiNum = Convert.ToInt32(reader["kamiNum"]);
                         model.ProductType_Id = Convert.ToInt32(reader[EProducts.ProductType_Id.ToString()]);
                         model.ProductTypeName = reader["ProductName"].ToString();
                         model.AddedTime = Convert.ToDateTime(reader[EProducts.AddedTime.ToString()]);
@@ -133,6 +134,32 @@ namespace HZ.MVC.FaKa.BLL
             }
                 ));
             return modelArr;
+        }
+
+        public static ProductViewModel SearchById(string id)
+        {
+            string sql = "select a.*,b.[ProductName] from Products a join ProductTypes b on a.[ProductType_Id] = b.[Id] where a.[Id]=" + id;
+            ProductViewModel model = null;
+
+            ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        model = new ProductViewModel();
+                        model.Id = Convert.ToInt32(reader[EProducts.Id.ToString()]);
+                        model.Name = reader[EProducts.Name.ToString()].ToString();
+                        model.ProductType_Id = Convert.ToInt32(reader[EProducts.ProductType_Id.ToString()]);
+                        model.ProductTypeName = reader["ProductName"].ToString();
+                        model.Price = Convert.ToDouble(reader[EProducts.Price.ToString()]);
+                        model.AddedTime = Convert.ToDateTime(reader[EProducts.AddedTime.ToString()]);
+                        model.UpdateTime = Convert.ToDateTime(reader[EProducts.UpdateTime.ToString()]);
+                    }
+                }
+            }
+                ));
+            return model;
         }
 
         public static List<ProductViewModel> SearchBysql(string name)

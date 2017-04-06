@@ -1,5 +1,6 @@
 ﻿using HZ.MVC.FaKa.Areas.Admin.Models;
 using HZ.MVC.FaKa.BLL;
+using HZ.MVC.FaKa.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace HZ.MVC.FaKa.Controllers
         {
             var allPro = GetAllProducts();
             ViewBag.pros = allPro;
-            
+
             ViewBag.Message = "一、支付宝付款后不要动，20秒左右自动跳转到卡密页面" + "\r\n" +
                               "二、微信付款后等待10秒左右，点击已完成付款 查询卡密" + "\r\n" +
                               "如果没法识别扫描，请截图保存去扫一扫里添加相片扫描";
@@ -63,6 +64,8 @@ namespace HZ.MVC.FaKa.Controllers
 
         public ActionResult Order()
         {
+            
+
 
             return View();
         }
@@ -73,6 +76,25 @@ namespace HZ.MVC.FaKa.Controllers
         /// <returns></returns>
         public ActionResult Confirm()
         {
+            string email = Request.QueryString["mail"];
+            string id = Request.QueryString["id"];
+            string num = Request.QueryString["num"];
+            string random = Request.QueryString["t"];
+            
+            ProductViewModel p = BProduct.SearchById(id);
+            if(p==null)
+            {
+                return View();
+            }
+            double totalMoney = Convert.ToInt32(num) * p.Price;
+
+            ViewBag.Email = email;
+            ViewBag.Id = id;
+            ViewBag.Num = num;
+            ViewBag.Total = totalMoney;
+            ViewBag.Name = p.Name;
+            ViewBag.OrderNO = DTHelper.GetCurrentTimeOrderNo();
+            ViewBag.SinglePrice = p.Price;
             return View();
         }
     }

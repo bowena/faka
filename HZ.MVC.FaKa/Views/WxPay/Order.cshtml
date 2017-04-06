@@ -2,7 +2,8 @@
     ViewBag.Title = "Order";
 }
 
-<hr />
+<link type="text/css" rel="stylesheet" href="/Content/widget.css" source="widget">
+<link type="text/css" rel="stylesheet" href="/Content/unit.css">
 
 <style type="text/css">
     .center {
@@ -15,16 +16,72 @@
         .center div p {
             margin-top: 0px;
         }
+
+    .hr {
+        border-bottom: 1px solid #e6e6e6;
+        height: 0;
+        margin-bottom: 10px;
+    }
+
+    .parent {
+        margin-bottom: 10px;
+        height: 20px;
+    }
+
+    .proName {
+        width: 75%;
+        float: left;
+    }
+
+    .yuan {
+        float: right;
+        width: 15%;
+        text-align: right;
+    }
 </style>
-<div class="row paypage-logo">
+<div id="container">
+    @using (Html.BeginForm("Order", "WxPay", FormMethod.Post))
+    {
 
-    <h2>test</h2>
+        <div id="content" class="w">
 
-</div>
-<div class="center">
+            <div class="checkout-tit">
+                <span class="tit-txt">填写并核对订单信息</span>
+            </div>
 
-    <div>
-        <img src="http://pan.baidu.com/share/qrcode?w=250&h=250&url=@ViewBag.QR_url" alt="微信支付商品二维码" />
-        <p>打开微信，扫一扫二维码</p>
-    </div>
+            <div class="checkout-steps">
+
+                <div class="step-tit">
+                    <h3>订单信息</h3>
+                </div>
+                <div class="hr"></div>
+                <div class="parent">
+
+                    <div class="proName">
+                        <p><font color="red" style="padding:0 10px;">@ViewBag.Name</font>&nbsp;X &nbsp; @ViewBag.Num</p>
+                    </div>
+                    <div class="yuan">
+                        <p>@ViewBag.Total 元</p>
+                    </div>
+
+                </div>
+
+                <div class="hr"></div>
+
+                <div id="shipAndSkuInfo">
+                    <div class="center">
+
+                        <div>
+                            <img src="http://pan.baidu.com/share/qrcode?w=250&h=250&url=@ViewBag.QR_url" alt="微信支付商品二维码" />
+                            <p>打开微信，扫一扫二维码</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    }
 </div>
