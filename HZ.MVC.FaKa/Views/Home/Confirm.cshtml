@@ -78,7 +78,7 @@
     @using (Html.BeginForm("Order","WxPay",FormMethod.Post))
     {
         <input type="hidden" name="proId" value="@ViewBag.Id"/>
-        <input type="hidden" name="orderNo" value="@ViewBag.OrderNO"/>
+        <input type="hidden" name="proName" value="@ViewBag.Name"/>
         <input type="hidden" name="price" value="@ViewBag.SinglePrice"/>
         <input type="hidden" name="num" value="@ViewBag.Num"/>
         <input type="hidden" name="email" value="@ViewBag.Email"/>
@@ -103,7 +103,6 @@
                                         <p>订单名称:<font color="red" style="padding:0 10px;">@ViewBag.Name</font></p>
                                         <p>订单数量:<font color="red" style="padding:0 10px;">@ViewBag.Num</font></p>
                                         <p>订单价格:<font color="red" style="padding:0 10px;">@ViewBag.SinglePrice</font></p>
-                                        <p>订 单 号:<font color="red" style="padding:0 10px;">@ViewBag.OrderNO</font></p>
                                     </div>
                                 </div>
                             </div>

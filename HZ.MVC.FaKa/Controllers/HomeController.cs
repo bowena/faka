@@ -93,7 +93,6 @@ namespace HZ.MVC.FaKa.Controllers
             ViewBag.Num = num;
             ViewBag.Total = totalMoney;
             ViewBag.Name = p.Name;
-            ViewBag.OrderNO = DTHelper.GetCurrentTimeOrderNo();
             ViewBag.SinglePrice = p.Price;
             return View();
         }

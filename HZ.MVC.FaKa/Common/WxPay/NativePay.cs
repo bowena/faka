@@ -34,15 +34,15 @@ namespace WxPayAPI
         * @param productId 商品ID
         * @return 模式二URL
         */
-        public string GetPayUrl(string productId)
+        public string GetPayUrl(string productId, int price, string name,string tradeNo)
         {
             Log.Info(this.GetType().ToString(), "Native pay mode 2 url is producing...");
 
             WxPayData data = new WxPayData();
-            data.SetValue("body", "test");//商品描述
-            data.SetValue("attach", "test");//附加数据
-            data.SetValue("out_trade_no", WxPayApi.GenerateOutTradeNo());//随机字符串
-            data.SetValue("total_fee", 1);//总金额
+            data.SetValue("body", name);//商品描述
+            data.SetValue("attach", name);//附加数据
+            data.SetValue("out_trade_no", tradeNo);//随机字符串
+            data.SetValue("total_fee", price);//总金额
             data.SetValue("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));//交易起始时间
             data.SetValue("time_expire", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss"));//交易结束时间
             data.SetValue("goods_tag", "jjj");//商品标记

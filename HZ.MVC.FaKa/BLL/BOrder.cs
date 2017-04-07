@@ -75,6 +75,64 @@ namespace HZ.MVC.FaKa.BLL
                 return false;
         }
 
+        public static OrderViewModel SearchByTradeNo(string tradeNo)
+        {
+            string sql = "select * from Orders where NO ='" + tradeNo.Trim() + "' ";
+            OrderViewModel model = null;
+
+            ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        model = new OrderViewModel();
+                        model.Id = Convert.ToInt32(reader[EOrders.Id.ToString()]);
+                        model.NO = reader[EOrders.NO.ToString()].ToString();
+                        model.Type = reader[EOrders.Type.ToString()].ToString();
+                        model.Product_Id = Convert.ToInt32(reader[EOrders.Product_Id.ToString()]);
+                        model.Price = Convert.ToDouble(reader[EOrders.Price.ToString()]);
+                        model.Count = Convert.ToInt32(reader[EOrders.Count.ToString()]);
+                        model.Status = reader[EOrders.Status.ToString()].ToString();
+                        model.LocalStatus = reader[EOrders.LocalStatus.ToString()].ToString();
+                        model.UpdateTime = Convert.ToDateTime(reader[EOrders.UpdateTime.ToString()]);
+                        model.Remark = reader[EOrders.Remark.ToString()].ToString();
+                    }
+                }
+            }
+                ));
+            return model;
+        }
+
+        public static OrderViewModel SearchByContact(string contacts)
+        {
+            string sql = "select * from Orders where Remark ='" + contacts.Trim() + "' ";
+            OrderViewModel model = null;
+
+            ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        model = new OrderViewModel();
+                        model.Id = Convert.ToInt32(reader[EOrders.Id.ToString()]);
+                        model.NO = reader[EOrders.NO.ToString()].ToString();
+                        model.Type = reader[EOrders.Type.ToString()].ToString();
+                        model.Product_Id = Convert.ToInt32(reader[EOrders.Product_Id.ToString()]);
+                        model.Price = Convert.ToDouble(reader[EOrders.Price.ToString()]);
+                        model.Count = Convert.ToInt32(reader[EOrders.Count.ToString()]);
+                        model.Status = reader[EOrders.Status.ToString()].ToString();
+                        model.LocalStatus = reader[EOrders.LocalStatus.ToString()].ToString();
+                        model.UpdateTime = Convert.ToDateTime(reader[EOrders.UpdateTime.ToString()]);
+                        model.Remark = reader[EOrders.Remark.ToString()].ToString();
+                    }
+                }
+            }
+                ));
+            return model;
+        }
+
         public static OrderViewModel SearchBySql(string sql)
         {
 

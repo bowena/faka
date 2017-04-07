@@ -1,5 +1,23 @@
 ﻿@{
     ViewBag.Title = "KaMiList";
 }
+<div>
 
-<h2>KaMiList</h2>
+    @{
+        Dictionary<int, string> kamis = Model as Dictionary<int, string>;
+        if (kamis != null)
+        {
+            <ul>
+                @foreach (var item in kamis)
+                {
+                    <li>@item.Value</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <h3>兄弟，没货了</h3>
+        }
+    }
+
+</div>

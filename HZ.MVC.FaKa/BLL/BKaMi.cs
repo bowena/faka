@@ -158,6 +158,26 @@ namespace HZ.MVC.FaKa.BLL
             return modelArr;
         }
 
+        public static Dictionary<int,string> SearchKamiByTrade(OrderViewModel order)
+        {
+            string sql = "select Id,Content from Kamis where Product_Id=" + order.Product_Id + " order by AddedTime asc limit " + order.Count;
+            Dictionary<int, string> modelArr = new Dictionary<int,string>();
+            ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        int id = Convert.ToInt32(reader[EKamis.Id.ToString()]);
+                        string content = reader[EKamis.Content.ToString()].ToString();
+                        modelArr.Add(id, content);
+                    }
+                }
+            }
+                ));
+            return modelArr;
+        }
+
         public static KaMiViewModel SearchById(int id)
         {
             string sql = "select * from Kamis where id=" + id;

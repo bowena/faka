@@ -1,4 +1,6 @@
-﻿using HZ.MVC.FaKa.Common;
+﻿using HZ.MVC.FaKa.Areas.Admin.Models;
+using HZ.MVC.FaKa.BLL;
+using HZ.MVC.FaKa.Common;
 using Microsoft.Web.WebPages.OAuth;
 using System;
 using System.Collections.Generic;
@@ -19,7 +21,7 @@ namespace HZ.MVC.FaKa.Controllers
 
         public ActionResult Index()
         {
-           
+
             return View();
         }
 
@@ -31,33 +33,94 @@ namespace HZ.MVC.FaKa.Controllers
         public ActionResult Order()
         {
             string proId = Request.Form["proId"];
-            string orderNo = Request.Form["orderNo"];
+            string name = Request.Form["proName"];
             string price = Request.Form["price"];
             string num = Request.Form["num"];
             string email = Request.Form["email"];
 
+            ProductViewModel model = BProduct.SearchById(proId);
+            if (model == null)
+            {
+                return Content("订单生成异常");
+            }
+
+            double _price = Convert.ToDouble(price);
+            int _num = Convert.ToInt32(num);
+
+            if (model.Price != _price)
+            {
+                return Content("订单生成异常(金额不符)");
+            }
+            if (model.Name != name)
+            {
+                return Content("订单生成异常(名称不符)");
+            }
+
+            double totalPrice = _price * _num;
+            string orderNo = DTHelper.GetCurrentTimeOrderNo();
+            //订单生成
+            OrderViewModel orderModel = new OrderViewModel();
+            orderModel.Count = _num;
+            orderModel.NO = orderNo;
+            orderModel.Price = _price;
+            orderModel.Product_Id = Convert.ToInt32(proId);
+            orderModel.Remark = email;
+            orderModel.Type = Request.Form["paytype"];//1:微信  2:支付宝
+            orderModel.LocalStatus = "待支付";
+            orderModel.UpdateTime = DateTime.Now;
+            BOrder.Insert(orderModel);
 
             NativePay nativePay = new NativePay();
 
+            //转化为以分为单位的金额
+            int money = Convert.ToInt32(totalPrice * 100);
             //生成扫码支付模式二url
-            string url = nativePay.GetPayUrl("1234567890");
+            string url = nativePay.GetPayUrl(proId, money, name, orderNo);
 
             ViewBag.QR_url = url;
+            ViewBag.Name = name;
+            ViewBag.Num = _num;
+            ViewBag.Total = totalPrice;
+            ViewBag.tNo = orderNo;
+            ViewBag.payType = Request.Form["paytype"];
             return View();
         }
 
         public ActionResult KaMiList()
         {
-            //此处接受微信返回通知，进行相应处理
-            System.IO.Stream response = Request.InputStream;
-            using (StreamReader read = new StreamReader(response,System.Text.Encoding.UTF8))
+            //查询卡密，并显示
+            string tNo = Request.QueryString["tNo"];
+            OrderViewModel order = BOrder.SearchByTradeNo(tNo);
+            if (order == null)
+                return View();
+
+            Dictionary<int,string> kamis = BKaMi.SearchKamiByTrade(order);
+
+            return View(kamis);
+        }
+
+        public JsonResult CheckPayResult()
+        {
+            string tradeNo = Request["trade_no"];
+            string payType = Request["payway"];
+
+            OrderViewModel model = BOrder.SearchByTradeNo(tradeNo);
+            if (model == null)
             {
-                string resStr = read.ReadToEnd();
+                var result = new { code = "-2", msg = "not exists" };
+                return Json(LitJson.JsonMapper.ToJson(result));
             }
 
-
-
-            return View();
+            if (model.LocalStatus != "已付款")
+            {
+                var result = new { code = "-1", msg = "wait for pay" };
+                return Json(LitJson.JsonMapper.ToJson(result));
+            }
+            else
+            {
+                var result = new { code = "1", msg = "success" };
+                return Json(LitJson.JsonMapper.ToJson(result));
+            }
         }
 
         /// <summary>
@@ -89,17 +152,20 @@ namespace HZ.MVC.FaKa.Controllers
                     {
                         //交易成功
                         string transaction_id = res.Element("xml").Element("transaction_id").Value;//微信订单号
-                        string transaction_id_own = res.Element("xml").Element("out_trade_no").Value;//商户订单号
+                        string trade_no = res.Element("xml").Element("out_trade_no").Value;//商户订单号
 
                         //查询订单是否存在
-                        //XDocument query = WXHelper.Orderquery(transaction_id_own);
-                        //if (query.Element("xml").Element("trade_state").Value == "SUCCESS")
-                        //{
-                        //    UpdateOrder(res, transaction_id, transaction_id_own);
-                        //}
-
-                        //通知微信不必返回
-                        //Response.Write(CallWxSuccess());
+                        OrderViewModel model = BOrder.SearchByTradeNo(trade_no);
+                        if (model != null)
+                        {
+                            //存在
+                            BOrder.Update("update Orders set LocalStatus='已付款' where Id=" + model.Id);
+                        }
+                        return Content(CallWxSuccess());
+                    }
+                    else
+                    {
+                        return Content("支付出现问题，请返回重试");
                     }
                 }
             }
@@ -107,8 +173,7 @@ namespace HZ.MVC.FaKa.Controllers
             {
 
             }
-
-            return Content(CallWxSuccess());
+            return Content("failed");
         }
 
         public string CallWxSuccess()
@@ -116,6 +181,16 @@ namespace HZ.MVC.FaKa.Controllers
             StringBuilder builder = new StringBuilder();
             builder.Append("<xml>");
             builder.Append("<return_code><![CDATA[SUCCESS]]></return_code>");
+            builder.Append("<return_msg><![CDATA[OK]]></return_msg>");
+            builder.Append("</xml>");
+            return builder.ToString();
+        }
+
+        public string CallWxFail()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<xml>");
+            builder.Append("<return_code><![CDATA[FAIL]]></return_code>");
             builder.Append("<return_msg><![CDATA[OK]]></return_msg>");
             builder.Append("</xml>");
             return builder.ToString();
