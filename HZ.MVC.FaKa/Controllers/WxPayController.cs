@@ -96,6 +96,18 @@ namespace HZ.MVC.FaKa.Controllers
 
             Dictionary<int,string> kamis = BKaMi.SearchKamiByTrade(order);
 
+            #region 更新卡密状态为已使用
+            List<KaMiViewModel> models = new List<KaMiViewModel>();
+            foreach (var item in kamis)
+            {
+                KaMiViewModel ka = new KaMiViewModel();
+                ka.Id = item.Key;
+                ka.Remark = order.Remark;
+                models.Add(ka);
+            }
+            BKaMi.UpdateBySql(models); 
+            #endregion
+
             return View(kamis);
         }
 

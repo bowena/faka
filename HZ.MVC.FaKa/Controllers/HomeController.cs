@@ -13,6 +13,11 @@ namespace HZ.MVC.FaKa.Controllers
     {
         public ActionResult Index()
         {
+            if (Request.Cookies != null && Request.Cookies.Count > 0)
+            {
+                HttpCookie cookie = Request.Cookies.Get("cmail");
+                ViewBag.ckie = cookie.Value;
+            }
             var allPro = GetAllProducts();
             ViewBag.pros = allPro;
 
@@ -61,10 +66,23 @@ namespace HZ.MVC.FaKa.Controllers
             return View();
         }
 
+        public bool ExisitCookie(string email)
+        {
+            if (Request.Cookies != null && Request.Cookies.Count > 0)
+            {
+                HttpCookie cookie = Request.Cookies.Get("cmail");
+                if (cookie != null && cookie.Value.Trim().ToLower() == email.Trim().ToLower())
+                    return true;
+                else
+                    return false;
+            }
+            return false;
+        }
+
 
         public ActionResult Order()
         {
-            
+
 
 
             return View();
@@ -80,9 +98,9 @@ namespace HZ.MVC.FaKa.Controllers
             string id = Request.QueryString["id"];
             string num = Request.QueryString["num"];
             string random = Request.QueryString["t"];
-            
+
             ProductViewModel p = BProduct.SearchById(id);
-            if(p==null)
+            if (p == null)
             {
                 return View();
             }
@@ -94,6 +112,16 @@ namespace HZ.MVC.FaKa.Controllers
             ViewBag.Total = totalMoney;
             ViewBag.Name = p.Name;
             ViewBag.SinglePrice = p.Price;
+
+            if (!ExisitCookie(email))
+            {
+                HttpCookie cookie = new HttpCookie("cmail", email);
+                cookie.Path = "/";
+                cookie.Domain = "51facaile.top";
+                cookie.Expires = DateTime.Now.AddYears(10);
+                Response.Cookies.Add(cookie); 
+            }
+            //Response.SetCookie(cookie);
             return View();
         }
     }

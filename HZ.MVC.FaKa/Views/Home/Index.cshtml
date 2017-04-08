@@ -170,8 +170,6 @@
     tr:hover {
         background: #DBDBDB;
     }
-
-
 </style>
 @section featured {
     <section class="featured">
@@ -212,37 +210,39 @@
             <th>
                 操作
             </th>
-        </tr> 
-        @{ 
+        </tr>
+        @{
             List<ProductViewModel> allPros = ViewBag.pros as List<ProductViewModel>;
-
-            foreach (var item in allPros)
+            if (allPros != null)
             {
-                <tr>
-                    <td class="goods" onclick="tips('@item.Name','@item.Price')" width="550">
-                        <font size="2">@item.Name</font>
-                    </td>
-                    <td width="60">
-                        <font title="物品单价" color="#FF5400">@(item.Price)元</font>
-                    </td>
-                    <td width="60">
-                        <font title="物品库存" color="#0000FF">@(item.KamiNum)个</font>
-                    </td>
-                    <td width="80">
-                        <span class="am-btn-xs" onclick="goodsjian(true,'@item.Id','@item.KamiNum')"> - </span>
-                        <input class="am-num" id="id@(item.Id)" value="0" type="text">
-                        <sapn class="am-btn-xs" onclick="goodsjian(false,'@item.Id','@item.KamiNum')"> + </sapn>
-                    </td>
-                    <td width="120">
-                        <input class="am-num" id="mail@(item.Id)" value="" placeholder="请填写邮箱地址" style="width:120px;" type="text">
-                    </td>
-                    <td width="40">
-                        <a class="button button-primary button-square button-small" onclick="goodsbuy('@item.Id','@item.KamiNum')">购买</a>
-                    </td>
-                </tr>
+                foreach (var item in allPros)
+                {
+                    <tr>
+                        <td class="goods" onclick="tips('@item.Name','@item.Price')" width="550">
+                            <font size="2">@item.Name</font>
+                        </td>
+                        <td width="60">
+                            <font title="物品单价" color="#FF5400">@(item.Price)元</font>
+                        </td>
+                        <td width="60">
+                            <font title="物品库存" color="#0000FF">@(item.KamiNum)个</font>
+                        </td>
+                        <td width="80">
+                            <span class="am-btn-xs" onclick="goodsjian(true,'@item.Id','@item.KamiNum')"> - </span>
+                            <input class="am-num" id="id@(item.Id)" value="0" type="text">
+                            <sapn class="am-btn-xs" onclick="goodsjian(false,'@item.Id','@item.KamiNum')"> + </sapn>
+                        </td>
+                        <td width="120">
+                            <input class="am-num" id="mail@(item.Id)" value="@ViewBag.ckie" placeholder="请填写邮箱地址" style="width:120px;" type="text">
+                        </td>
+                        <td width="40">
+                            <a class="button button-primary button-square button-small" onclick="goodsbuy('@item.Id','@item.KamiNum')">购买</a>
+                        </td>
+                    </tr>
+                }
             }
         }
-        
+
     </tbody>
 </table>
 

@@ -1,6 +1,7 @@
 ﻿using HZ.MVC.FaKa.Areas.Admin.Models;
 using HZ.MVC.FaKa.Areas.Admin.Models.Enum;
 using HZ.MVC.FaKa.Dal;
+using HZ.MVC.FaKa.Models.Enum;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -48,6 +49,17 @@ namespace HZ.MVC.FaKa.BLL
                 return true;
             else
                 return false;
+        }
+
+        public static bool UpdateBySql(List<KaMiViewModel> models)
+        {
+            List<string> sqls = new List<string>();
+            foreach (var item in models)
+            {
+                sqls.Add("update Kamis set State=" + (int)KamiState.Used + ",Remark='" + item.Remark + "' where Id = " + item.Id);
+            }
+
+            return ManagerSqlite.ExecuteNonQuery(sqls, null);
         }
 
         public static bool Update(KaMiViewModel model)
@@ -158,10 +170,10 @@ namespace HZ.MVC.FaKa.BLL
             return modelArr;
         }
 
-        public static Dictionary<int,string> SearchKamiByTrade(OrderViewModel order)
+        public static Dictionary<int, string> SearchKamiByTrade(OrderViewModel order)
         {
-            string sql = "select Id,Content from Kamis where Product_Id=" + order.Product_Id + " order by AddedTime asc limit " + order.Count;
-            Dictionary<int, string> modelArr = new Dictionary<int,string>();
+            string sql = "select Id,Content from Kamis where Product_Id=" + order.Product_Id + " and State="+ (int)KamiState.NotUse +" order by AddedTime asc limit " + order.Count;
+            Dictionary<int, string> modelArr = new Dictionary<int, string>();
             ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
             {
                 if (reader != null)

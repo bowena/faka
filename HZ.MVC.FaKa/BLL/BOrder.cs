@@ -14,6 +14,10 @@ namespace HZ.MVC.FaKa.BLL
     {
         public static bool Insert(OrderViewModel model)
         {
+            if (model == null)
+            {
+                return false;
+            }
             string sql = string.Empty; ;
             List<SQLiteParameter> ps = new List<SQLiteParameter>();
             sql = "INSERT INTO Orders ("
@@ -47,7 +51,7 @@ namespace HZ.MVC.FaKa.BLL
             ps.Add(new SQLiteParameter() { ParameterName = EOrders.LocalStatus.ToString(), Value = model.LocalStatus });
             ps.Add(new SQLiteParameter() { ParameterName = EOrders.Remark.ToString(), Value = model.Remark });
             ps.Add(new SQLiteParameter() { ParameterName = EOrders.UpdateTime.ToString(), Value = model.UpdateTime });
-            
+
             int count = ManagerSqlite.ExecuteNonQuery(sql, ps.ToArray());
             if (count > 0)
                 return true;
@@ -57,6 +61,10 @@ namespace HZ.MVC.FaKa.BLL
 
         public static bool Update(string sql)
         {
+            if (string.IsNullOrEmpty(sql))
+            {
+                return false;
+            }
             int count = ManagerSqlite.ExecuteNonQuery(sql, null);
             if (count > 0)
                 return true;
@@ -77,6 +85,10 @@ namespace HZ.MVC.FaKa.BLL
 
         public static OrderViewModel SearchByTradeNo(string tradeNo)
         {
+            if (string.IsNullOrEmpty(tradeNo))
+            {
+                return null;
+            }
             string sql = "select * from Orders where NO ='" + tradeNo.Trim() + "' ";
             OrderViewModel model = null;
 
@@ -106,6 +118,10 @@ namespace HZ.MVC.FaKa.BLL
 
         public static OrderViewModel SearchByContact(string contacts)
         {
+            if (string.IsNullOrEmpty(contacts))
+            {
+                return null;
+            }
             string sql = "select * from Orders where Remark ='" + contacts.Trim() + "' ";
             OrderViewModel model = null;
 
@@ -135,7 +151,10 @@ namespace HZ.MVC.FaKa.BLL
 
         public static OrderViewModel SearchBySql(string sql)
         {
-
+            if (string.IsNullOrEmpty(sql))
+            {
+                return null;
+            }
             OrderViewModel model = new OrderViewModel();
 
             ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
