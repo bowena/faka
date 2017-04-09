@@ -14,6 +14,8 @@ namespace HZ.MVC.FaKa.BLL
     {
         public static bool Insert(ProductTypeViewModel model)
         {
+            if (model == null)
+                return false;
             string sql = string.Empty; ;
             List<SQLiteParameter> ps = new List<SQLiteParameter>();
             sql = "INSERT INTO ProductTypes ("
@@ -35,6 +37,8 @@ namespace HZ.MVC.FaKa.BLL
 
         public static bool Update(ProductTypeViewModel model)
         {
+            if (model == null)
+                return false;
             string sql = "update ProductTypes set ProductName=@ProductName,UpdateTime=@UpdateTime where Id=@Id ";
             List<SQLiteParameter> ps = new List<SQLiteParameter>();
             ps.Add(new SQLiteParameter() { ParameterName = EProductTypes.Id.ToString(), Value = model.Id });
@@ -60,7 +64,8 @@ namespace HZ.MVC.FaKa.BLL
 
         public static bool Delete(List<int> ids)
         {
-
+            if (ids == null || ids.Count == 0)
+                return false;
             List<string> sqls = new List<string>();
             foreach (var item in ids)
             {

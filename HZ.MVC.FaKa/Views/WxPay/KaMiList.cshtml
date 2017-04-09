@@ -1,7 +1,21 @@
 ﻿@{
     ViewBag.Title = "KaMiList";
 }
-<div>
+
+@using (Html.BeginForm("SearchByContact", "WxPay"))
+{
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <input name="contact" type="text" class="form-control" placeholder="请输入订单号或者联系方式">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">查询</button>
+                </span>
+            </div>
+        </div>
+    </div>
+}
+<div style="margin:20px 0 0 0">
 
     @{
         Dictionary<int, string> kamis = Model as Dictionary<int, string>;

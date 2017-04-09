@@ -42,6 +42,11 @@ namespace HZ.MVC.FaKa.Areas.Admin.Models
             get;
             set;
         }
+        public string Trade_No
+        {
+            get;
+            set;
+        }
         public string Remark
         {
             get;

@@ -72,6 +72,19 @@ namespace HZ.MVC.FaKa.BLL
                 return false;
         }
 
+        public static bool Delete(List<int> ids)
+        {
+            if (ids == null || ids.Count == 0)
+                return false;
+            List<string> sqls = new List<string>();
+            foreach (var item in ids)
+            {
+                sqls.Add("delete from Orders where Id = " + item);
+            }
+
+            return ManagerSqlite.ExecuteNonQuery(sqls, null);
+        }
+
         public static bool Delete(int id)
         {
             string sql = "delete from Orders where Id = " + id;
@@ -81,6 +94,36 @@ namespace HZ.MVC.FaKa.BLL
                 return true;
             else
                 return false;
+        }
+
+        public static List<OrderViewModel> SearchAll()
+        {
+            string sql = "select * from Orders ";
+
+            List<OrderViewModel> modelArr = new List<OrderViewModel>();
+            ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        OrderViewModel model = new OrderViewModel();
+                        model.Id = Convert.ToInt32(reader[EOrders.Id.ToString()]);
+                        model.NO = reader[EOrders.NO.ToString()].ToString();
+                        model.Type = reader[EOrders.Type.ToString()].ToString();
+                        model.Product_Id = Convert.ToInt32(reader[EOrders.Product_Id.ToString()]);
+                        model.Price = Convert.ToDouble(reader[EOrders.Price.ToString()]);
+                        model.Count = Convert.ToInt32(reader[EOrders.Count.ToString()]);
+                        model.Status = reader[EOrders.Status.ToString()].ToString();
+                        model.LocalStatus = reader[EOrders.LocalStatus.ToString()].ToString();
+                        model.UpdateTime = Convert.ToDateTime(reader[EOrders.UpdateTime.ToString()]);
+                        model.Remark = reader[EOrders.Remark.ToString()].ToString();
+                        modelArr.Add(model);
+                    }
+                }
+            }
+                ));
+            return modelArr;
         }
 
         public static OrderViewModel SearchByTradeNo(string tradeNo)
@@ -116,14 +159,14 @@ namespace HZ.MVC.FaKa.BLL
             return model;
         }
 
-        public static OrderViewModel SearchByContact(string contacts)
+        public static List<OrderViewModel> SearchByContact(string contacts)
         {
             if (string.IsNullOrEmpty(contacts))
             {
                 return null;
             }
             string sql = "select * from Orders where Remark ='" + contacts.Trim() + "' ";
-            OrderViewModel model = null;
+            List<OrderViewModel> modelArr = new List<OrderViewModel>() ;
 
             ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
             {
@@ -131,7 +174,7 @@ namespace HZ.MVC.FaKa.BLL
                 {
                     while (reader.Read())
                     {
-                        model = new OrderViewModel();
+                        OrderViewModel model = new OrderViewModel();
                         model.Id = Convert.ToInt32(reader[EOrders.Id.ToString()]);
                         model.NO = reader[EOrders.NO.ToString()].ToString();
                         model.Type = reader[EOrders.Type.ToString()].ToString();
@@ -142,11 +185,12 @@ namespace HZ.MVC.FaKa.BLL
                         model.LocalStatus = reader[EOrders.LocalStatus.ToString()].ToString();
                         model.UpdateTime = Convert.ToDateTime(reader[EOrders.UpdateTime.ToString()]);
                         model.Remark = reader[EOrders.Remark.ToString()].ToString();
+                        modelArr.Add(model);
                     }
                 }
             }
                 ));
-            return model;
+            return modelArr;
         }
 
         public static OrderViewModel SearchBySql(string sql)

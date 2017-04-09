@@ -49,7 +49,7 @@ var TableInit = function () {
                 field: 'NO',
                 title: '订单号'
             }, {
-                field: 'PayType',
+                field: 'Type',
                 title: '支付类型'
             }, {
                 field: 'UpdateTime',

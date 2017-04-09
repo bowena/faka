@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -65,7 +66,7 @@ namespace HZ.MVC.FaKa.Controllers
             orderModel.Price = _price;
             orderModel.Product_Id = Convert.ToInt32(proId);
             orderModel.Remark = email;
-            orderModel.Type = Request.Form["paytype"];//1:微信  2:支付宝
+            orderModel.Type = Request.Form["paytype"] == "1" ? "微信" : "支付宝";//1:微信  2:支付宝
             orderModel.LocalStatus = "待支付";
             orderModel.UpdateTime = DateTime.Now;
             BOrder.Insert(orderModel);
@@ -94,7 +95,7 @@ namespace HZ.MVC.FaKa.Controllers
             if (order == null)
                 return View();
 
-            Dictionary<int,string> kamis = BKaMi.SearchKamiByTrade(order);
+            Dictionary<int, string> kamis = BKaMi.SearchKamiByTrade(order);
 
             #region 更新卡密状态为已使用
             List<KaMiViewModel> models = new List<KaMiViewModel>();
@@ -103,12 +104,34 @@ namespace HZ.MVC.FaKa.Controllers
                 KaMiViewModel ka = new KaMiViewModel();
                 ka.Id = item.Key;
                 ka.Remark = order.Remark;
+                ka.Trade_No = tNo;
                 models.Add(ka);
             }
-            BKaMi.UpdateBySql(models); 
+            BKaMi.UpdateBySql(models);
             #endregion
 
             return View(kamis);
+        }
+
+        public ActionResult SearchByContact()
+        {
+            string contact = Request.Form["contact"];
+            Regex regex = new Regex(@"^\b[A-Z]+\d+\b$");
+            Dictionary<int, string> kamis = new Dictionary<int, string>();
+            if (!regex.IsMatch(contact))
+            {
+                 kamis = BKaMi.SearchKamiByContact(contact, "");
+                 if (kamis.Count == 0)
+                     return Content("未查到对应订单信息");
+            }
+            else
+            {
+                 kamis = BKaMi.SearchKamiByContact("", contact);
+                 if (kamis.Count == 0)
+                     return Content("未查到对应订单信息");
+            }
+
+            return View("KaMiList", kamis);
         }
 
         public JsonResult CheckPayResult()

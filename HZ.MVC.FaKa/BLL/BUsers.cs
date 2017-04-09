@@ -15,6 +15,8 @@ namespace HZ.MVC.FaKa.BLL
     {
         public static bool Insert(UsersViewModel model)
         {
+            if (model == null)
+                return false;
             string sql = string.Empty; ;
             List<SQLiteParameter> ps = new List<SQLiteParameter>();
             sql = "INSERT INTO Users ("
@@ -43,6 +45,8 @@ namespace HZ.MVC.FaKa.BLL
 
         public static bool Update(string sql)
         {
+            if (string.IsNullOrEmpty(sql))
+                return false;
             int count = ManagerSqlite.ExecuteNonQuery(sql, null);
             if (count > 0)
                 return true;

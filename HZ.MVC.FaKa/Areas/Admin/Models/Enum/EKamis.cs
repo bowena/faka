@@ -24,6 +24,7 @@ namespace HZ.MVC.FaKa.Areas.Admin.Models.Enum
         /// </summary>
         Product_Id,
         ProductType_Id,
+        Trade_No,
         /// <summary>
         ///Kamis表:Remark字段
         /// </summary>

@@ -16,6 +16,8 @@ namespace HZ.MVC.FaKa.BLL
     {
         public static bool Insert(KaMiViewModel model)
         {
+            if (model == null)
+                return false;
             string sql = string.Empty; ;
             List<SQLiteParameter> ps = new List<SQLiteParameter>();
             sql = "INSERT INTO Kamis ("
@@ -23,6 +25,7 @@ namespace HZ.MVC.FaKa.BLL
              + EKamis.State.ToString() + ","
              + EKamis.Product_Id.ToString() + ","
              + EKamis.ProductType_Id.ToString() + ","
+             + EKamis.Trade_No.ToString() + ","
              + EKamis.Remark.ToString() + ","
              + EKamis.AddedTime.ToString() + ","
              + EKamis.UpdateTime.ToString()
@@ -31,6 +34,7 @@ namespace HZ.MVC.FaKa.BLL
              + "@" + EKamis.State.ToString() + ","
              + "@" + EKamis.Product_Id.ToString() + ","
              + "@" + EKamis.ProductType_Id.ToString() + ","
+             + "@" + EKamis.Trade_No.ToString() + ","
              + "@" + EKamis.Remark.ToString() + ","
              + "@" + EKamis.AddedTime.ToString() + ","
              + "@" + EKamis.UpdateTime.ToString()
@@ -40,6 +44,7 @@ namespace HZ.MVC.FaKa.BLL
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.State.ToString(), Value = model.State });
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.Product_Id.ToString(), Value = model.Product_Id });
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.ProductType_Id.ToString(), Value = model.ProductType_Id });
+            ps.Add(new SQLiteParameter() { ParameterName = EKamis.Trade_No.ToString(), Value = model.Trade_No });
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.Remark.ToString(), Value = model.Remark });
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.AddedTime.ToString(), Value = model.AddedTime });
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.UpdateTime.ToString(), Value = model.UpdateTime });
@@ -53,10 +58,14 @@ namespace HZ.MVC.FaKa.BLL
 
         public static bool UpdateBySql(List<KaMiViewModel> models)
         {
+            if (models == null || models.Count == 0)
+            {
+                return false;
+            }
             List<string> sqls = new List<string>();
             foreach (var item in models)
             {
-                sqls.Add("update Kamis set State=" + (int)KamiState.Used + ",Remark='" + item.Remark + "' where Id = " + item.Id);
+                sqls.Add("update Kamis set State=" + (int)KamiState.Used + ",Remark='" + item.Remark + "',Trade_No='" + item.Trade_No + "' where Id = " + item.Id);
             }
 
             return ManagerSqlite.ExecuteNonQuery(sqls, null);
@@ -64,6 +73,8 @@ namespace HZ.MVC.FaKa.BLL
 
         public static bool Update(KaMiViewModel model)
         {
+            if (model == null)
+                return false;
             StringBuilder sb = new StringBuilder(2048);
             List<SQLiteParameter> ps = new List<SQLiteParameter>();
             sb.Append("UPDATE Kamis SET ");
@@ -80,6 +91,9 @@ namespace HZ.MVC.FaKa.BLL
 
             sb.Append(EKamis.ProductType_Id.ToString() + "=@" + EKamis.ProductType_Id.ToString() + ",");
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.ProductType_Id.ToString(), Value = model.ProductType_Id });
+
+            sb.Append(EKamis.Trade_No.ToString() + "=@" + EKamis.Trade_No.ToString() + ",");
+            ps.Add(new SQLiteParameter() { ParameterName = EKamis.Trade_No.ToString(), Value = model.Trade_No });
 
             sb.Append(EKamis.Remark.ToString() + "=@" + EKamis.Remark.ToString() + ",");
             ps.Add(new SQLiteParameter() { ParameterName = EKamis.Remark.ToString(), Value = model.Remark });
@@ -102,6 +116,8 @@ namespace HZ.MVC.FaKa.BLL
 
         public static bool Delete(List<int> ids)
         {
+            if (ids == null || ids.Count == 0)
+                return false;
             List<string> sqls = new List<string>();
             foreach (var item in ids)
             {
@@ -132,6 +148,7 @@ namespace HZ.MVC.FaKa.BLL
                         model.ProductTypeName = reader["ProductName"].ToString();
                         model.AddedTime = Convert.ToDateTime(reader[EKamis.AddedTime.ToString()]);
                         model.UpdateTime = Convert.ToDateTime(reader[EKamis.UpdateTime.ToString()]);
+                        model.Trade_No = reader[EKamis.Trade_No.ToString()].ToString();
                         model.Remark = reader[EKamis.Remark.ToString()].ToString();
                         modelArr.Add(model);
                     }
@@ -161,6 +178,7 @@ namespace HZ.MVC.FaKa.BLL
                         model.ProductTypeName = reader["ProductName"].ToString();
                         model.AddedTime = Convert.ToDateTime(reader[EKamis.AddedTime.ToString()]);
                         model.UpdateTime = Convert.ToDateTime(reader[EKamis.UpdateTime.ToString()]);
+                        model.Trade_No = reader[EKamis.Trade_No.ToString()].ToString();
                         model.Remark = reader[EKamis.Remark.ToString()].ToString();
                         modelArr.Add(model);
                     }
@@ -172,7 +190,36 @@ namespace HZ.MVC.FaKa.BLL
 
         public static Dictionary<int, string> SearchKamiByTrade(OrderViewModel order)
         {
-            string sql = "select Id,Content from Kamis where Product_Id=" + order.Product_Id + " and State="+ (int)KamiState.NotUse +" order by AddedTime asc limit " + order.Count;
+            string sql = "select Id,Content from Kamis where Product_Id=" + order.Product_Id + " and State=" + (int)KamiState.NotUse + " order by AddedTime asc limit " + order.Count;
+            Dictionary<int, string> modelArr = new Dictionary<int, string>();
+            ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        int id = Convert.ToInt32(reader[EKamis.Id.ToString()]);
+                        string content = reader[EKamis.Content.ToString()].ToString();
+                        modelArr.Add(id, content);
+                    }
+                }
+            }
+                ));
+            return modelArr;
+        }
+
+        public static Dictionary<int, string> SearchKamiByContact(string email, string tradeNo)
+        {
+            string sql = "";
+            if (!string.IsNullOrEmpty(email))
+            {
+                sql = "select a.Id,a.Content from Kamis a join Orders b on a.Product_Id=b.Product_Id where a.Remark='" + email + "' and b.Remark='" + email + "' ";
+            }
+            else
+            {
+                sql = "select a.Id,a.Content from Kamis a join Orders b on a.Product_Id=b.Product_Id where a.Trade_No='" + tradeNo + "' and b.NO='" + tradeNo + "' ";
+            }
+
             Dictionary<int, string> modelArr = new Dictionary<int, string>();
             ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
             {
@@ -209,6 +256,7 @@ namespace HZ.MVC.FaKa.BLL
                             model.ProductType_Id = Convert.ToInt32(reader[EKamis.ProductType_Id.ToString()]);
                             model.AddedTime = Convert.ToDateTime(reader[EKamis.AddedTime.ToString()]);
                             model.UpdateTime = Convert.ToDateTime(reader[EKamis.UpdateTime.ToString()]);
+                            model.Trade_No = reader[EKamis.Trade_No.ToString()].ToString();
                             model.Remark = reader[EKamis.Remark.ToString()].ToString();
                         }
                     }
