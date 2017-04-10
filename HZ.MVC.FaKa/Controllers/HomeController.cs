@@ -16,7 +16,8 @@ namespace HZ.MVC.FaKa.Controllers
             if (Request.Cookies != null && Request.Cookies.Count > 0)
             {
                 HttpCookie cookie = Request.Cookies.Get("cmail");
-                ViewBag.ckie = cookie.Value;
+                if (cookie != null)
+                    ViewBag.ckie = cookie.Value;
             }
             var allPro = GetAllProducts();
             ViewBag.pros = allPro;
@@ -119,7 +120,7 @@ namespace HZ.MVC.FaKa.Controllers
                 cookie.Path = "/";
                 cookie.Domain = "51facaile.top";
                 cookie.Expires = DateTime.Now.AddYears(10);
-                Response.Cookies.Add(cookie); 
+                Response.Cookies.Add(cookie);
             }
             //Response.SetCookie(cookie);
             return View();
