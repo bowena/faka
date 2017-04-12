@@ -113,7 +113,7 @@ namespace HZ.MVC.FaKa.Controllers
             {
                 HttpCookie cookie = new HttpCookie("cmail", email);
                 cookie.Path = "/";
-                cookie.Domain = "51facaile.top";
+                cookie.Domain = "69zshi.com";
                 cookie.Expires = DateTime.Now.AddYears(10);
                 Response.Cookies.Add(cookie);
             }

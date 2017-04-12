@@ -31,6 +31,9 @@ namespace F2FPay
             this.logFile = logFile;
             if (!File.Exists(logFile))
             {
+                string dir = logFile.Remove(logFile.LastIndexOf("\\"));
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
                 FileStream fs = File.Create(logFile);
                 fs.Close();
             }
