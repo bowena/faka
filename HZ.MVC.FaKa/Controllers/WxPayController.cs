@@ -66,17 +66,27 @@ namespace HZ.MVC.FaKa.Controllers
             orderModel.Price = _price;
             orderModel.Product_Id = Convert.ToInt32(proId);
             orderModel.Remark = email;
-            orderModel.Type = Request.Form["paytype"] == "1" ? "微信" : "支付宝";//1:微信  2:支付宝
+            orderModel.Type = Request.Form["paytype"];
             orderModel.LocalStatus = "待支付";
             orderModel.UpdateTime = DateTime.Now;
             BOrder.Insert(orderModel);
 
-            NativePay nativePay = new NativePay();
+            string url = "";
 
-            //转化为以分为单位的金额
-            int money = Convert.ToInt32(totalPrice * 100);
-            //生成扫码支付模式二url
-            string url = nativePay.GetPayUrl(proId, money, name, orderNo);
+            if (orderModel.Type == "1")
+            {
+                NativePay nativePay = new NativePay();
+
+                //转化为以分为单位的金额
+                int money = Convert.ToInt32(totalPrice * 100);
+                //生成扫码支付模式二url
+                url = "https://www.baifubao.com/o2o/0/qrcode?size=6&text=" + nativePay.GetPayUrl(proId, money, name, orderNo); 
+            }
+            else if(orderModel.Type == "2")
+            {
+                url = "/Zhifu/precreate.aspx?tid=" + orderNo;
+            }
+            else { }
 
             ViewBag.QR_url = url;
             ViewBag.Name = name;
@@ -165,16 +175,16 @@ namespace HZ.MVC.FaKa.Controllers
         public ActionResult GetPayResult()
         {
             string resultFromWx = getPostStr();
-            if (string.IsNullOrEmpty(resultFromWx))
-                return View();
-            string path = Path.Combine(Server.MapPath("~/data"), "data" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
-            FileInfo f = new FileInfo(path);
-            if (!Directory.Exists(f.DirectoryName))
-                Directory.CreateDirectory(f.DirectoryName);
-            using (StreamWriter writer = new StreamWriter(path))
-            {
-                writer.Write(resultFromWx);
-            }
+            //if (string.IsNullOrEmpty(resultFromWx))
+            //    return View();
+            //string path = Path.Combine(Server.MapPath("~/data"), "data" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
+            //FileInfo f = new FileInfo(path);
+            //if (!Directory.Exists(f.DirectoryName))
+            //    Directory.CreateDirectory(f.DirectoryName);
+            //using (StreamWriter writer = new StreamWriter(path))
+            //{
+            //    writer.Write(resultFromWx);
+            //}
 
             var res = XDocument.Parse(resultFromWx);
 

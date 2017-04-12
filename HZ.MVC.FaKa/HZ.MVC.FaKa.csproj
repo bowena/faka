@@ -40,6 +40,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AopSdk">
+      <HintPath>Library\AopSdk.dll</HintPath>
+    </Reference>
+    <Reference Include="F2FPayDll">
+      <HintPath>Library\F2FPayDll.dll</HintPath>
+    </Reference>
     <Reference Include="LitJson, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\LitJson.dll</HintPath>
@@ -122,6 +128,9 @@
     <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="ThoughtWorks.QRCode">
+      <HintPath>Library\ThoughtWorks.QRCode.dll</HintPath>
     </Reference>
     <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -235,6 +244,22 @@
     <Compile Include="Models\Enum\KamiStatus.cs" />
     <Compile Include="Models\WxPayPost\PostModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Zhifu\app_code\Config.cs" />
+    <Compile Include="Zhifu\app_code\LogHelper.cs" />
+    <Compile Include="Zhifu\notify_url.aspx.cs">
+      <DependentUpon>notify_url.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Zhifu\notify_url.aspx.designer.cs">
+      <DependentUpon>notify_url.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Zhifu\precreate.aspx.cs">
+      <DependentUpon>precreate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Zhifu\precreate.aspx.designer.cs">
+      <DependentUpon>precreate.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bankList.css" />
@@ -381,6 +406,10 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Scripts\locale\bootstrap-table-en-US.js.template" />
     <Content Include="Scripts\locale\README.md" />
+    <Content Include="Zhifu\images\alipay.gif" />
+    <Content Include="Zhifu\images\new-btn-fixed.png" />
+    <Content Include="Zhifu\notify_url.aspx" />
+    <Content Include="Zhifu\precreate.aspx" />
     <None Include="Properties\PublishProfiles\faka.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap-table.js" />
