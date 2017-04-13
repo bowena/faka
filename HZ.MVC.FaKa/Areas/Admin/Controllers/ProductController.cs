@@ -16,6 +16,10 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
+            if (Session["admin_User"] == null)
+            {
+                return RedirectToRoute(new { controller = "Account", action = "Login", area = "" });
+            }
             List<ProductTypeViewModel> lstRes = BProductType.SearchAll();
             ViewBag.option = lstRes;
             ViewBag.title = "产品管理";

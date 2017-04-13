@@ -52,6 +52,9 @@ var TableInit = function () {
                 field: 'Type',
                 title: '支付类型'
             }, {
+                field: 'LocalStatus',
+                title: '支付状态'
+            }, {
                 field: 'UpdateTime',
                 title: '更新时间',
                 formatter: function (value, row, index) {

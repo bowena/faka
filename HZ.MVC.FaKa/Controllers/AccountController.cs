@@ -16,7 +16,7 @@ using HZ.MVC.FaKa.Common;
 namespace HZ.MVC.FaKa.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
+    //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //
@@ -51,6 +51,7 @@ namespace HZ.MVC.FaKa.Controllers
 
             if (inputPwd == pwd.ToString())
             {
+                Session["admin_User"] = model;
                 return RedirectToRoute(new { controller = "ProductType", action = "Index", area = "Admin" });
             }
             else
@@ -69,7 +70,7 @@ namespace HZ.MVC.FaKa.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
-
+            Session["admin_User"] = null;
             return RedirectToAction("Index", "Home");
         }
 

@@ -75,13 +75,13 @@
     }
 </style>
 <div id="container">
-    @using (Html.BeginForm("Order","WxPay",FormMethod.Post))
+    @using (Html.BeginForm("Order", "WxPay", FormMethod.Post))
     {
-        <input type="hidden" name="proId" value="@ViewBag.Id"/>
-        <input type="hidden" name="proName" value="@ViewBag.Name"/>
-        <input type="hidden" name="price" value="@ViewBag.SinglePrice"/>
-        <input type="hidden" name="num" value="@ViewBag.Num"/>
-        <input type="hidden" name="email" value="@ViewBag.Email"/>
+        <input type="hidden" name="proId" value="@ViewBag.Id" />
+        <input type="hidden" name="proName" value="@ViewBag.Name" />
+        <input type="hidden" name="price" value="@ViewBag.SinglePrice" />
+        <input type="hidden" name="num" value="@ViewBag.Num" />
+        <input type="hidden" name="email" value="@ViewBag.Email" />
         <div id="content" class="w">
 
             <div class="checkout-tit">
@@ -199,20 +199,36 @@
     }
 </div>
 
-<script src="http://og0chum3v.bkt.clouddn.com/jquery.js"></script>
-<script type="text/javascript">
-    $('.amount-list > li').click(function () {
-        for (var i = 0; i < $('.amount-list > li').length; i++) {
-            $('.amount-list > li').eq(i).children('.amount-box').removeClass('amount-current');
-        }
-        $(this).children('.amount-box').addClass('amount-current');
-        $("#amount").val($(this).children('.amount-radio').val());
-    });
-    $('.method-list > li').click(function () {
-        for (var i = 0; i < $('.method-list > li').length; i++) {
-            $('.method-list > li').eq(i).children('.method-box').removeClass('method-current');
-        }
-        $(this).children('.method-box').addClass('method-current');
-        $("#method").val($(this).children('.method-radio').val());
-    });
-</script>
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            for (var i = 0; i < $('.method-list > li').length; i++) {
+                $('.method-list > li').eq(i).children('.method-box').removeClass('method-current');
+            }
+            var ischeck = $("input:radio:checked").val();
+            if(ischeck == "2")
+            {
+                $('#alipay').parent().find('.method-box').addClass('method-current')
+            }
+            else
+            {
+                $('#qqpay').parent().find('.method-box').addClass('method-current')
+            }
+        });
+        $('.amount-list > li').click(function () {
+            for (var i = 0; i < $('.amount-list > li').length; i++) {
+                $('.amount-list > li').eq(i).children('.amount-box').removeClass('amount-current');
+            }
+            $(this).children('.amount-box').addClass('amount-current');
+            $("#amount").val($(this).children('.amount-radio').val());
+        });
+        $('.method-list > li').click(function () {
+            for (var i = 0; i < $('.method-list > li').length; i++) {
+                $('.method-list > li').eq(i).children('.method-box').removeClass('method-current');
+            }
+            $(this).children('.method-box').addClass('method-current');
+            $("#method").val($(this).children('.method-radio').val());
+        });
+    </script>
+}

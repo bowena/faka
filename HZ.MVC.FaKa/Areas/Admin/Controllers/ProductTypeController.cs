@@ -16,7 +16,10 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-
+            if (Session["admin_User"] == null)
+            {
+                return RedirectToRoute(new { controller = "Account", action = "Login", area = "" });
+            }
             ViewBag.title = "类型管理";
 
             return View();

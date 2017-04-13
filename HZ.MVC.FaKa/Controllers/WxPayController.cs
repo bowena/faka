@@ -175,8 +175,8 @@ namespace HZ.MVC.FaKa.Controllers
         public ActionResult GetPayResult()
         {
             string resultFromWx = getPostStr();
-            //if (string.IsNullOrEmpty(resultFromWx))
-            //    return View();
+            if (string.IsNullOrEmpty(resultFromWx))
+                return View();
             //string path = Path.Combine(Server.MapPath("~/data"), "data" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
             //FileInfo f = new FileInfo(path);
             //if (!Directory.Exists(f.DirectoryName))
