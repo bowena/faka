@@ -80,7 +80,7 @@ namespace HZ.MVC.FaKa.Controllers
                 //转化为以分为单位的金额
                 int money = Convert.ToInt32(totalPrice * 100);
                 //生成扫码支付模式二url
-                url = "https://www.baifubao.com/o2o/0/qrcode?size=6&text=" + nativePay.GetPayUrl(proId, money, name, orderNo); 
+                url = "https://www.baifubao.com/o2o/0/qrcode?size=4&text=" + nativePay.GetPayUrl(proId, money, name, orderNo); 
             }
             else if(orderModel.Type == "2")
             {

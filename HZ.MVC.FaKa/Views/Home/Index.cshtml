@@ -258,7 +258,11 @@
             return;
         }
 
-
+        if ($obj.value == '0')
+        {
+            alert('购买数量需大于0')
+            return;
+        }
 
         if ($objmail.value == '') {
             alert('请填写接收邮箱')
