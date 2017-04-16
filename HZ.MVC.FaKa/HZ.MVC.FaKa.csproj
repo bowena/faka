@@ -282,6 +282,7 @@
     <Content Include="Scripts\Admin\Order\Index.js" />
     <Content Include="Scripts\Admin\ProductType\Index.js" />
     <Content Include="Scripts\Admin\Product\Index.js" />
+    <Content Include="Scripts\ajaxfileupload.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\layer.js" />
     <Content Include="Scripts\locale\bootstrap-table-af-ZA.js" />
