@@ -54,6 +54,7 @@ namespace HZ.MVC.FaKa.Dal
             }
         }
 
+
         /// <summary>
         /// 执行SQL语句
         /// </summary>
@@ -99,6 +100,42 @@ namespace HZ.MVC.FaKa.Dal
             }
         }
 
+        public static bool ExecuteBatchNonQuery(List<string> sql, List<SQLiteParameter[]> sqlParam)
+        {
+            SQLiteTransaction tran = null;
+            try
+            {
+                using (SQLiteConnection con = MyConnection.GetSQLiteConnection())
+                {
+                    tran = con.BeginTransaction();
+                    using (SQLiteCommand cmd = new SQLiteCommand())
+                    {
+                        cmd.Connection = con;
+                        for (int i = 0; i < sql.Count; i++)
+                        {
+                            cmd.CommandText = sql[i];
+                            if (null != sqlParam)
+                                cmd.Parameters.AddRange(sqlParam[i]);
+                            if (cmd.Connection != null && cmd.Connection.State == ConnectionState.Open)
+                            {
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                        tran.Commit();
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                tran.Rollback();
+                return false;
+            }
+            finally
+            {
+                //command.Dispose();
+            }
+        }
         /// <summary>
         /// 获取首行首列值
         /// </summary>

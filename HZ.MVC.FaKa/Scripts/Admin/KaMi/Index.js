@@ -90,10 +90,10 @@ var ButtonInit = function () {
             $('#myModal').modal()
 
             $("#myModal .btn-primary").unbind("click").click(function () {
-                postdata.Content = $("#txt_modal_content").val();//txt_modal_content
                 postdata.Product_Id = $("#txt_modal_product").val() * 1;
                 postdata.ProductType_Id = $("#txt_modal_productType").val() * 1;
                 postdata.Remark = $("#txt_modal_remark").val();
+                postdata.Content = $("#txt_modal_kamis").val();
                 $.ajax({
                     type: "post",
                     url: "/KaMi/Add",

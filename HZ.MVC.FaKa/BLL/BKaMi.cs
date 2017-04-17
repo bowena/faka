@@ -18,7 +18,7 @@ namespace HZ.MVC.FaKa.BLL
         {
             if (model == null)
                 return false;
-            string sql = string.Empty; ;
+            string sql = string.Empty;
             List<SQLiteParameter> ps = new List<SQLiteParameter>();
             sql = "INSERT INTO Kamis ("
              + EKamis.Content.ToString() + ","
@@ -54,6 +54,51 @@ namespace HZ.MVC.FaKa.BLL
                 return true;
             else
                 return false;
+        }
+
+        public static bool Insert(List<KaMiViewModel> model)
+        {
+            if (model == null || model.Count == 0)
+                return false;
+            List<string> sqls = new List<string>();
+            List<SQLiteParameter[]> paramArr = new List<SQLiteParameter[]>();
+            foreach (var item in model)
+            {
+                string sql = string.Empty;
+                List<SQLiteParameter> ps = new List<SQLiteParameter>();
+                sql = "INSERT INTO Kamis ("
+                 + EKamis.Content.ToString() + ","
+                 + EKamis.State.ToString() + ","
+                 + EKamis.Product_Id.ToString() + ","
+                 + EKamis.ProductType_Id.ToString() + ","
+                 + EKamis.Trade_No.ToString() + ","
+                 + EKamis.Remark.ToString() + ","
+                 + EKamis.AddedTime.ToString() + ","
+                 + EKamis.UpdateTime.ToString()
+                 + ") VALUES ("
+                 + "@" + EKamis.Content.ToString() + ","
+                 + "@" + EKamis.State.ToString() + ","
+                 + "@" + EKamis.Product_Id.ToString() + ","
+                 + "@" + EKamis.ProductType_Id.ToString() + ","
+                 + "@" + EKamis.Trade_No.ToString() + ","
+                 + "@" + EKamis.Remark.ToString() + ","
+                 + "@" + EKamis.AddedTime.ToString() + ","
+                 + "@" + EKamis.UpdateTime.ToString()
+                 + ");";
+                ps.Add(new SQLiteParameter() { ParameterName = EKamis.Id.ToString(), Value = item.Id });
+                ps.Add(new SQLiteParameter() { ParameterName = EKamis.Content.ToString(), Value = item.Content });
+                ps.Add(new SQLiteParameter() { ParameterName = EKamis.State.ToString(), Value = item.State });
+                ps.Add(new SQLiteParameter() { ParameterName = EKamis.Product_Id.ToString(), Value = item.Product_Id });
+                ps.Add(new SQLiteParameter() { ParameterName = EKamis.ProductType_Id.ToString(), Value = item.ProductType_Id });
+                ps.Add(new SQLiteParameter() { ParameterName = EKamis.Trade_No.ToString(), Value = item.Trade_No });
+                ps.Add(new SQLiteParameter() { ParameterName = EKamis.Remark.ToString(), Value = item.Remark });
+                ps.Add(new SQLiteParameter() { ParameterName = EKamis.AddedTime.ToString(), Value = item.AddedTime });
+                ps.Add(new SQLiteParameter() { ParameterName = EKamis.UpdateTime.ToString(), Value = item.UpdateTime });
+                sqls.Add(sql);
+                paramArr.Add(ps.ToArray());
+
+            }
+            return ManagerSqlite.ExecuteBatchNonQuery(sqls, paramArr);
         }
 
         public static bool UpdateBySql(List<KaMiViewModel> models)

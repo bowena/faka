@@ -58,16 +58,45 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
             {
                 return Content(ReturnMsg.fail.ToString());
             }
-            model.AddedTime = DateTime.Now;
-            model.UpdateTime = DateTime.Now;
-            bool isSucc = BKaMi.Insert(model);
-            if (isSucc)
+
+            if (model.Content.Contains("|"))
             {
-                return Content(ReturnMsg.success.ToString());
+                //批量操作
+                string kamis = model.Content;
+                string[] contentArr = kamis.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                List<KaMiViewModel> kamiModes = new List<KaMiViewModel>();
+                foreach (var item in contentArr)
+                {
+                    KaMiViewModel subModel = new KaMiViewModel();
+                    subModel.Product_Id = model.Product_Id;
+                    subModel.ProductType_Id = model.ProductType_Id;
+                    subModel.Remark = model.Remark;
+                    subModel.Content = item;
+                    kamiModes.Add(subModel);
+                }
+
+                if (BKaMi.Insert(kamiModes))
+                {
+                    return Content(ReturnMsg.success.ToString());
+                }
+                else
+                {
+                    return Content(ReturnMsg.fail.ToString());
+                }
             }
             else
             {
-                return Content(ReturnMsg.fail.ToString());
+                //单个操作
+                model.AddedTime = DateTime.Now;
+                model.UpdateTime = DateTime.Now;
+                if (BKaMi.Insert(model))
+                {
+                    return Content(ReturnMsg.success.ToString());
+                }
+                else
+                {
+                    return Content(ReturnMsg.fail.ToString());
+                }
             }
         }
 
