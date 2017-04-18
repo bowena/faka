@@ -15,7 +15,6 @@ using HZ.MVC.FaKa.Common;
 
 namespace HZ.MVC.FaKa.Controllers
 {
-    [Authorize]
     //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
@@ -41,7 +40,14 @@ namespace HZ.MVC.FaKa.Controllers
             //{
             //    return RedirectToLocal(returnUrl);
             //}
-
+            if (Session["admin_User"] != null)
+            {
+                LoginModel m = Session["admin_User"] as LoginModel;
+                if (m != null && m.UserName == "admin")
+                {
+                    RedirectToRoute(new { controller = "ProductType", action = "Index", area = "Admin" });
+                }
+            }
             object pwd = BUsers.ExecuteSql("select password from Users where userName='" + model.UserName + "'");
             if (pwd == null)
             {
@@ -62,14 +68,10 @@ namespace HZ.MVC.FaKa.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            WebSecurity.Logout();
             Session["admin_User"] = null;
             return RedirectToAction("Index", "Home");
         }

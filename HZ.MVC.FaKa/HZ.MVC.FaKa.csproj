@@ -411,6 +411,7 @@
     <Content Include="Zhifu\images\new-btn-fixed.png" />
     <Content Include="Zhifu\notify_url.aspx" />
     <Content Include="Zhifu\precreate.aspx" />
+    <Content Include="Areas\Admin\Views\Shared\_LoginPartialArea.cshtml" />
     <None Include="Properties\PublishProfiles\faka.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap-table.js" />

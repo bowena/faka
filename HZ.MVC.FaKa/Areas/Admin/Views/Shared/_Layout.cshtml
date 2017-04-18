@@ -33,9 +33,7 @@
             </div>
             <div class="float-right">
                 <section id="login">
-                    <ul>
-                        <li>@Html.ActionLink("退出", "LogOff", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-                    </ul>
+                    @Html.Partial("_LoginPartialArea")
                 </section>
                 <nav>
                     <ul id="menu">

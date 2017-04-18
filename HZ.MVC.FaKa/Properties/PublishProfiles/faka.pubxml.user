@@ -10,10 +10,10 @@
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Data/kami.db">
-      <publishTime>04/13/2017 15:40:43</publishTime>
+      <publishTime>04/17/2017 14:40:07</publishTime>
     </File>
     <File Include="Areas/Admin/Views/KaMi/Index.cshtml">
-      <publishTime>03/31/2017 16:41:07</publishTime>
+      <publishTime>04/17/2017 14:40:50</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Order/Index.cshtml">
       <publishTime>04/01/2017 09:19:12</publishTime>
@@ -25,7 +25,10 @@
       <publishTime>03/31/2017 11:10:03</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Shared/_Layout.cshtml">
-      <publishTime>04/11/2017 11:28:26</publishTime>
+      <publishTime>04/18/2017 14:55:33</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Shared/_LoginPartialArea.cshtml">
+      <publishTime>04/18/2017 15:17:21</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Web.config">
       <publishTime>03/28/2017 13:32:28</publishTime>
@@ -91,7 +94,7 @@
       <publishTime>11/27/2016 11:00:30</publishTime>
     </File>
     <File Include="bin/HZ.MVC.FaKa.dll">
-      <publishTime>04/13/2017 16:04:16</publishTime>
+      <publishTime>04/18/2017 15:29:51</publishTime>
     </File>
     <File Include="bin/it/Microsoft.Data.Edm.resources.dll">
       <publishTime>11/27/2016 11:00:30</publishTime>
@@ -562,7 +565,7 @@
       <publishTime>03/30/2017 13:44:24</publishTime>
     </File>
     <File Include="Scripts/Admin/KaMi/Index.js">
-      <publishTime>04/01/2017 09:19:12</publishTime>
+      <publishTime>04/17/2017 14:37:28</publishTime>
     </File>
     <File Include="Scripts/Admin/Order/Index.js">
       <publishTime>04/13/2017 15:36:40</publishTime>
@@ -572,6 +575,9 @@
     </File>
     <File Include="Scripts/Admin/ProductType/Index.js">
       <publishTime>03/31/2017 11:03:05</publishTime>
+    </File>
+    <File Include="Scripts/ajaxfileupload.js">
+      <publishTime>04/17/2017 08:36:52</publishTime>
     </File>
     <File Include="Scripts/bootstrap-table.js">
       <publishTime>03/30/2017 13:49:43</publishTime>
@@ -811,13 +817,13 @@
       <publishTime>11/27/2016 12:42:56</publishTime>
     </File>
     <File Include="Views/Home/Confirm.cshtml">
-      <publishTime>04/13/2017 13:22:11</publishTime>
+      <publishTime>04/17/2017 14:46:24</publishTime>
     </File>
     <File Include="Views/Home/Contact.cshtml">
       <publishTime>03/23/2017 14:44:04</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>04/10/2017 09:41:46</publishTime>
+      <publishTime>04/14/2017 09:14:22</publishTime>
     </File>
     <File Include="Views/Home/Order.cshtml">
       <publishTime>12/13/2016 09:17:47</publishTime>
@@ -826,25 +832,25 @@
       <publishTime>11/27/2016 11:00:23</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>03/24/2017 09:13:00</publishTime>
+      <publishTime>04/14/2017 14:21:31</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
-      <publishTime>04/10/2017 09:41:46</publishTime>
+      <publishTime>04/18/2017 15:12:21</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>11/27/2016 11:00:23</publishTime>
     </File>
     <File Include="Views/WxPay/GetPayResult.cshtml">
-      <publishTime>03/24/2017 17:42:49</publishTime>
+      <publishTime>04/17/2017 14:45:08</publishTime>
     </File>
     <File Include="Views/WxPay/Index.cshtml">
-      <publishTime>03/23/2017 14:56:52</publishTime>
+      <publishTime>04/17/2017 14:45:30</publishTime>
     </File>
     <File Include="Views/WxPay/KaMiList.cshtml">
-      <publishTime>04/10/2017 09:41:46</publishTime>
+      <publishTime>04/17/2017 14:45:39</publishTime>
     </File>
     <File Include="Views/WxPay/Order.cshtml">
-      <publishTime>04/12/2017 16:10:50</publishTime>
+      <publishTime>04/18/2017 13:53:22</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>11/27/2016 11:00:23</publishTime>

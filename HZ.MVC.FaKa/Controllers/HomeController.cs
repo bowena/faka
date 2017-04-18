@@ -28,7 +28,7 @@ namespace HZ.MVC.FaKa.Controllers
                             "1.可以不用注册，可直接付款购买，自动发货！无需等待即买即看" + "\n" +
                             "2.万一你付款成功网页被你关了，拿订单号或者联系方式到查询订单页面查询" + "\n" +
                             "3.为了保护您账号安全，会定期删档，买号后请收藏，不可分享不然封停后果自负" + "\n" +
-                            "4.如有问题联系客服QQ：43854337 没有订单号不售后，没有库存联系客服上货";
+                            "4.如有问题联系客服QQ：81651067 没有订单号不售后，没有库存联系客服上货";
             return View();
         }
 
@@ -47,7 +47,7 @@ namespace HZ.MVC.FaKa.Controllers
                             "<p>1.可以不用注册，可直接付款购买，自动发货！无需等待即买即看</p>" +
                             "<p>2.万一你付款成功网页被你关了，拿订单号或者联系方式到查询订单页面查询</p>" +
                             "<p>3.为了保护您账号安全，会定期删档，买号请收藏，不可分享不然封停后果自负</p>" +
-                            "<p>4.如有问题联系客服QQ：43854337 没有订单号不售后，没有库存联系客服上货</p>" +
+                            "<p>4.如有问题联系客服QQ：81651067 没有订单号不售后，没有库存联系客服上货</p>" +
                             "<p>诚邀各路大牛共造双赢，一手货源，实力批发，诚信经营</p>" +
                             "<p>本店专业批发各大影视Vip、各种业务卡密、QQ号等</p>" +
                             "<p>有实力可以跑量的联系我，量大价格肯定美丽！</p>" +
@@ -113,7 +113,7 @@ namespace HZ.MVC.FaKa.Controllers
             {
                 HttpCookie cookie = new HttpCookie("cmail", email);
                 cookie.Path = "/";
-                cookie.Domain = "69zshi.com";
+                cookie.Domain = "1777ka.com";
                 cookie.Expires = DateTime.Now.AddYears(10);
                 Response.Cookies.Add(cookie);
             }

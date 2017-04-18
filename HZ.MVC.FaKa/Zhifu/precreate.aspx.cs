@@ -40,7 +40,7 @@ namespace HZ.MVC.FaKa.Zhifu
             //如果需要接收扫码支付异步通知，那么请把下面两行注释代替本行。
             //推荐使用轮询撤销机制，不推荐使用异步通知,避免单边账问题发生。
             //AlipayF2FPrecreateResult precreateResult = serviceClient.tradePrecreate(builder);
-            string notify_url = "http://www.69zshi.com/Zhifu/notify_url.aspx";  //商户接收异步通知的地址
+            string notify_url = "http://www.1777ka.com/Zhifu/notify_url.aspx";  //商户接收异步通知的地址
             AlipayF2FPrecreateResult precreateResult = serviceClient.tradePrecreate(builder, notify_url);
 
             //以下返回结果的处理供参考。

@@ -202,6 +202,12 @@
         //        });
         //    }
         //});
+
+        function redirectToKami()
+        {
+            window.location.href = '/WxPay/KaMiList?tNo=@ViewBag.tNo';
+        }
+
         // 检查是否支付完成
         function checkpay() {
             $.ajax({
@@ -218,8 +224,9 @@
                             skin: 'layui-layer-molv',
                             closeBtn: 0
                         });
-                        window.location.href = '/WxPay/KaMiList?tNo=@ViewBag.tNo';
-
+                       
+                        //延迟3秒跳转
+                        setTimeout("redirectToKami()", 3000);
                     }
                     if (osss.code == -2) {
                         layer.alert('订单不存在，请重新下单', {

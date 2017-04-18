@@ -1,0 +1,19 @@
+﻿@if (Session["admin_User"] != null)
+{
+    HZ.MVC.FaKa.Models.LoginModel model = Session["admin_User"] as HZ.MVC.FaKa.Models.LoginModel;
+    if (model != null)
+    {
+        <text>
+            你好，@Html.ActionLink(model.UserName, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "管理" })!
+            @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <a href="javascript:document.getElementById('logoutForm').submit()">注销</a>
+            }
+        </text>
+    }
+}
+else
+{
+    
+}
