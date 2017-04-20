@@ -163,7 +163,7 @@ var ButtonInit = function () {
 
             $("#myModal .btn-primary").unbind("click").click(function () {
                 postdata.Price = $("#txt_modal_price").val() * 1;
-                postdata.Name = $("#txt_modal_departmentname").val();
+                postdata.Name = $("#txt_modal_productname").val();
                 postdata.ProductType_Id = $("#usertype").val() * 1;
                 $.ajax({
                     type: "post",

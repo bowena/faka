@@ -59,11 +59,11 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
                 return Content(ReturnMsg.fail.ToString());
             }
 
-            if (model.Content.Contains("|"))
+            if (model.Content.Contains("\n"))
             {
                 //批量操作
                 string kamis = model.Content;
-                string[] contentArr = kamis.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] contentArr = kamis.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
                 List<KaMiViewModel> kamiModes = new List<KaMiViewModel>();
                 foreach (var item in contentArr)
                 {
