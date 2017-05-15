@@ -73,9 +73,13 @@ var TableInit = function () {
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
             departmentname: $("#txt_search_departmentname").val(),
+            productType: $("#txt_modal_productType").val(),
+            product: $("#txt_modal_product").val(),
         };
+        
         return temp;
     };
+  
     return oTableInit;
 };
 

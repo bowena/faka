@@ -33,11 +33,11 @@ namespace HZ.MVC.FaKa.Areas.Admin.Controllers
             return Content(LitJson.JsonMapper.ToJson(lstRes));
         }
 
-        public JsonResult GetKaMis(int limit, int offset, string departmentname)
+        public JsonResult GetKaMis(int limit, int offset, string departmentname, string productType, string product)
         {
             List<KaMiViewModel> lstRes = null;
-            if (!string.IsNullOrEmpty(departmentname))
-                lstRes = BKaMi.SearchBysql(departmentname);
+            if (!string.IsNullOrEmpty(departmentname) || (!string.IsNullOrEmpty(productType) && !string.IsNullOrEmpty(product)))
+                lstRes = BKaMi.SearchBysql(departmentname, productType, product);
             else
                 lstRes = BKaMi.SearchAll();
 

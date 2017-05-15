@@ -203,9 +203,9 @@ namespace HZ.MVC.FaKa.BLL
             return modelArr;
         }
 
-        public static List<KaMiViewModel> SearchBysql(string name)
+        public static List<KaMiViewModel> SearchBysql(string name,string typeId,string Id)
         {
-            string sql = "select a.*,b.Name,c.ProductName FROM Kamis a JOIN Products b on a.Product_Id = b.Id JOIN ProductTypes c on a.ProductType_Id = c.Id where a.[Content] like '%" + name + "%'";
+            string sql = "select a.*,b.Name,c.ProductName FROM Kamis a JOIN Products b on a.Product_Id = b.Id JOIN ProductTypes c on a.ProductType_Id = c.Id where a.[ProductType_Id]=" + typeId + "  and a.[Product_Id]=" + Id + " and a.[Content] like '%" + name + "%'";
             List<KaMiViewModel> modelArr = new List<KaMiViewModel>();
             ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
             {
