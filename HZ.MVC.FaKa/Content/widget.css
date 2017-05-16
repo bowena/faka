@@ -201,6 +201,26 @@
     border: 0;
 }
 
+.checkout-buttons .checkout-download {
+    float: right;
+    position: relative;
+    width: 135px;
+    height: 36px;
+    line-height: 36px;
+    margin: 8px 10px 0 0;
+    padding: 0;
+    background-color: #e00;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: arial,"Microsoft YaHei";
+    display: inline-block;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 0;
+}
+
 .checkout-buttons .checkout-submit-tip {
     background-color: #fffdee;
     border: 1px solid #edd28b;

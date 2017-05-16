@@ -124,14 +124,14 @@ namespace HZ.MVC.FaKa.Controllers
             string path = dir + "/" + tNo + ".csv";
             using (StreamWriter writer = new StreamWriter(path, true, Encoding.UTF8))
             {
-                string title = "订单号\t卡密内容\t联系方式\r\n";
+                string title = "订单号,卡密内容,联系方式\r\n";
                 writer.Write(title);
 
                 string content = "";
 
                 foreach (var item in kamis)
                 {
-                    content += tNo + "\t" + item.Value + "\t" + order.Remark + "\r\n";
+                    content += tNo + "," + item.Value + "," + order.Remark + "\r\n";
                 }
                 writer.Write(content);
             }

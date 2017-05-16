@@ -18,7 +18,7 @@
 }
 
 <div id="content" class="w">
-
+    <input type="hidden" id="isHide" />
     <div class="checkout-tit">
         <span class="tit-txt">以下是您的卡密</span>
     </div>
@@ -44,11 +44,12 @@
                                         {
                                             <p><font color="red" style="padding:0 10px;">@item.Value</font></p>
                                         }
-
+                                        <script>document.getElementById("isHide").value = "0"</script>
                                     }
                                     else
                                     {
-                                        <h3>兄弟，没货了</h3>
+                                        <p><font color="red" style="padding:0 10px;">兄弟，没货了</font></p>
+                                   <script>document.getElementById("isHide").value = "1"</script>
                                     }
                                 }
                             </div>
@@ -63,10 +64,11 @@
         <div id="checkout-floatbar" class="group">
             <div class="ui-ceilinglamp checkout-buttons">
 
-                <a class="checkout-submit" id="order-submit" href="@Url.Action("DownLoadFile", new { tNo = ViewBag.tNo })">
+                <a class="checkout-download" id="order-submit" href="@Url.Action("DownLoadFile", new { tNo = ViewBag.tNo })">
                     提交订单<b></b>
                 </a>
             </div>
         </div>
     </div>
+    <script>if (document.getElementById("isHide").value==="1") document.getElementsByClassName("trade-foot")[0].style = "display:none"</script>
 </div>

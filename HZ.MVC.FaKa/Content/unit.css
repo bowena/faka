@@ -66,3 +66,14 @@ button, html input[type=button], input[type=submit] {
     cursor: pointer;
     overflow: hidden;
 }
+
+.checkout-buttons .checkout-download b {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 135px;
+    height: 36px;
+    background: url(/Images/btn-download.jpg) no-repeat;
+    cursor: pointer;
+    overflow: hidden;
+}

@@ -277,6 +277,7 @@
     <Content Include="Content\toastr.min.css" />
     <Content Include="Content\unit.css" />
     <Content Include="Content\widget.css" />
+    <Content Include="Images\btn-download.jpg" />
     <Content Include="Images\btn-submit.jpg" />
     <Content Include="Images\wx.png" />
     <Content Include="Scripts\Admin\KaMi\Index.js" />
