@@ -80,9 +80,9 @@ namespace HZ.MVC.FaKa.Controllers
                 //转化为以分为单位的金额
                 int money = Convert.ToInt32(totalPrice * 100);
                 //生成扫码支付模式二url
-                url = "https://www.baifubao.com/o2o/0/qrcode?size=4&text=" + nativePay.GetPayUrl(proId, money, name, orderNo); 
+                url = "https://www.baifubao.com/o2o/0/qrcode?size=4&text=" + nativePay.GetPayUrl(proId, money, name, orderNo);
             }
-            else if(orderModel.Type == "2")
+            else if (orderModel.Type == "2")
             {
                 url = "/Zhifu/precreate.aspx?tid=" + orderNo;
             }
@@ -120,7 +120,30 @@ namespace HZ.MVC.FaKa.Controllers
             BKaMi.UpdateBySql(models);
             #endregion
 
+            string dir = Server.MapPath("~/Files") ;
+            string path = dir + "/" + tNo + ".csv";
+            using (StreamWriter writer = new StreamWriter(path, true, Encoding.UTF8))
+            {
+                string title = "订单号\t卡密内容\t联系方式\r\n";
+                writer.Write(title);
+
+                string content = "";
+
+                foreach (var item in kamis)
+                {
+                    content += tNo + "\t" + item.Value + "\t" + order.Remark + "\r\n";
+                }
+                writer.Write(content);
+            }
+            ViewBag.tNo = tNo;
             return View(kamis);
+        }
+
+        public ActionResult DownLoadFile(string tNo)
+        {
+            string dir = Server.MapPath("~/Files");
+            string downFile = dir + "/" + tNo + ".csv";
+            return File(downFile, "text/plain", tNo + ".csv");
         }
 
         public ActionResult SearchByContact()
@@ -130,15 +153,15 @@ namespace HZ.MVC.FaKa.Controllers
             Dictionary<int, string> kamis = new Dictionary<int, string>();
             if (!regex.IsMatch(contact))
             {
-                 kamis = BKaMi.SearchKamiByContact(contact, "");
-                 if (kamis.Count == 0)
-                     return Content("未查到对应订单信息");
+                kamis = BKaMi.SearchKamiByContact(contact, "");
+                if (kamis.Count == 0)
+                    return Content("未查到对应订单信息");
             }
             else
             {
-                 kamis = BKaMi.SearchKamiByContact("", contact);
-                 if (kamis.Count == 0)
-                     return Content("未查到对应订单信息");
+                kamis = BKaMi.SearchKamiByContact("", contact);
+                if (kamis.Count == 0)
+                    return Content("未查到对应订单信息");
             }
 
             return View("KaMiList", kamis);

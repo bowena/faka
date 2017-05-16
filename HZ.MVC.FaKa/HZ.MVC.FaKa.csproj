@@ -482,7 +482,9 @@
     <Content Include="Views\WxPay\GetPayResult.cshtml" />
     <Content Include="Views\Home\Confirm.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Files\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
