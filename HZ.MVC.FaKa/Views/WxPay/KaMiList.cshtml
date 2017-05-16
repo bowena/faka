@@ -1,7 +1,8 @@
 ﻿@{
     ViewBag.Title = "卡密列表";
 }
-
+<link type="text/css" rel="stylesheet" href="/Content/unit.css">
+<link type="text/css" rel="stylesheet" href="/Content/widget.css" source="widget">
 @using (Html.BeginForm("SearchByContact", "WxPay"))
 {
     <div class="row">
@@ -15,6 +16,121 @@
         </div>
     </div>
 }
+
+<div id="content" class="w">
+
+    <div class="checkout-tit">
+        <span class="tit-txt">填写并核对订单信息</span>
+    </div>
+
+    <div class="checkout-steps">
+
+        <div class="step-tit">
+            <h3>订单信息</h3>
+        </div>
+        <div class="hr"></div>
+        <div class="step-cont">
+            <div id="consignee-addr" class="consignee-content">
+                <div class="consignee-scrollbar">
+                    <div class="ui-scrollbar-main">
+                        <div class="consignee-scroll">
+                            <div class="consignee-cont" id="consignee1">
+                                <p>订单名称:<font color="red" style="padding:0 10px;">测试产品</font></p>
+                                <p>订单数量:<font color="red" style="padding:0 10px;">1</font></p>
+                                <p>订单价格:<font color="red" style="padding:0 10px;">0.01</font></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div id="shipAndSkuInfo">
+            <div id="payShipAndSkuInfo">
+                <div class="step-tit">
+                    <h3>支付方式</h3>
+                </div>
+                <div class="hr"></div>
+                <div class="step-cont">
+                    <div class="payment-list" id="">
+                        <div class="list-cont">
+
+                            <ul class="method-list clearfix">
+                                <li class="method-alipay">
+                                    <input type="radio" name="paytype" value="1" class="method-radio" id="qqpay" checked="checked">
+                                    <label class="method-box method-current" for="qqpay">
+                                        <img src="/Images/wx.png" alt="使用微信支付" width="94">
+                                    </label>
+                                </li>
+                                <li class="method-qqpay">
+                                    <input type="radio" name="paytype" value="2" class="method-radio" id="alipay">
+                                    <label class="method-box" for="alipay">
+                                        <img src="/Images/alipay.png" alt="使用支付宝支付" width="94">
+                                    </label>
+                                </li>
+                            </ul>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="order-summary">
+
+        <div class="statistic fr">
+            <div class="list">
+                <span><em class="ftx-01">1</em> 件商品，总商品金额：</span>
+                <em class="price" id="warePriceId">￥0.01</em>
+            </div>
+
+        </div>
+        <div class="clr"></div>
+    </div>
+
+    <div class="trade-foot">
+        <div class="trade-foot-detail-com">
+            <div class="fc-price-info">
+                <span class="price-tit">应付总额：</span>
+                <span class="price-num" id="sumPayPriceId">￥0.01</span>
+            </div>
+
+            <div class="fc-consignee-info">
+                <span id="sendMobile">收货人：sss</span>
+            </div>
+        </div>
+
+        <div id="checkout-floatbar" class="group">
+            <div class="ui-ceilinglamp checkout-buttons">
+                <div class="sticky-placeholder hide" style="display: none;">
+                </div>
+                <div class="sticky-wrap">
+                    <div class="inner">
+                        <button type="submit" class="checkout-submit" id="order-submit">
+                            提交订单<b></b>
+                        </button>
+
+                        <span id="checkCodeDiv"></span>
+                        <div class="checkout-submit-tip" id="changeAreaAndPrice" style="display: none;">
+                            由于价格可能发生变化，请核对后再提交订单
+                        </div>
+                    </div>
+                    <span id="submit_message" style="display:none" class="submit-error"></span>
+                    <div class="submit-check-info" id="submit_check_info_message" style="display:none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div style="margin:20px 0 0 0">
 
     @{

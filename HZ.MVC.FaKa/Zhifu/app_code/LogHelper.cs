@@ -86,6 +86,5 @@ namespace F2FPay
                 sw.Write(DateTime.Now.ToString("[yyyy-MM-dd HH:mm:ss] ") + text);
             }
         }
-
     }
 }
