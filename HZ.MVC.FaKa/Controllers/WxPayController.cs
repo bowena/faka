@@ -151,19 +151,21 @@ namespace HZ.MVC.FaKa.Controllers
             string contact = Request.Form["contact"];
             Regex regex = new Regex(@"^\b[A-Z]+\d+\b$");
             Dictionary<int, string> kamis = new Dictionary<int, string>();
+            string tNo = "";
             if (!regex.IsMatch(contact))
             {
-                kamis = BKaMi.SearchKamiByContact(contact, "");
+                kamis = BKaMi.SearchKamiByContact(contact, ref tNo);
                 if (kamis.Count == 0)
                     return Content("未查到对应订单信息");
             }
             else
             {
-                kamis = BKaMi.SearchKamiByContact("", contact);
+                kamis = BKaMi.SearchKamiByContact("",ref contact);
+                tNo = contact;
                 if (kamis.Count == 0)
                     return Content("未查到对应订单信息");
             }
-
+            ViewBag.tNo = tNo;
             return View("KaMiList", kamis);
         }
 

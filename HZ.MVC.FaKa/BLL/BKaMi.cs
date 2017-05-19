@@ -203,7 +203,7 @@ namespace HZ.MVC.FaKa.BLL
             return modelArr;
         }
 
-        public static List<KaMiViewModel> SearchBysql(string name,string typeId,string Id)
+        public static List<KaMiViewModel> SearchBysql(string name, string typeId, string Id)
         {
             string sql = "select a.*,b.Name,c.ProductName FROM Kamis a JOIN Products b on a.Product_Id = b.Id JOIN ProductTypes c on a.ProductType_Id = c.Id where a.[ProductType_Id]=" + typeId + "  and a.[Product_Id]=" + Id + " and a.[Content] like '%" + name + "%'";
             List<KaMiViewModel> modelArr = new List<KaMiViewModel>();
@@ -253,18 +253,18 @@ namespace HZ.MVC.FaKa.BLL
             return modelArr;
         }
 
-        public static Dictionary<int, string> SearchKamiByContact(string email, string tradeNo)
+        public static Dictionary<int, string> SearchKamiByContact(string email, ref string tradeNo)
         {
             string sql = "";
             if (!string.IsNullOrEmpty(email))
             {
-                sql = "select a.Id,a.Content from Kamis a join Orders b on a.Product_Id=b.Product_Id where a.Remark='" + email + "' and b.Remark='" + email + "' ";
+                sql = "select a.Id,a.Content,b.NO from Kamis a join Orders b on a.Product_Id=b.Product_Id where a.Remark='" + email + "' and b.Remark='" + email + "' ";
             }
             else
             {
-                sql = "select a.Id,a.Content from Kamis a join Orders b on a.Product_Id=b.Product_Id where a.Trade_No='" + tradeNo + "' and b.NO='" + tradeNo + "' ";
+                sql = "select a.Id,a.Content,b.NO from Kamis a join Orders b on a.Product_Id=b.Product_Id where a.Trade_No='" + tradeNo + "' and b.NO='" + tradeNo + "' ";
             }
-
+            string no = "";
             Dictionary<int, string> modelArr = new Dictionary<int, string>();
             ManagerSqlite.GetSQLiteDataReader(sql, null, new IDbDataReaderCallBack(delegate(DbDataReader reader)
             {
@@ -274,11 +274,12 @@ namespace HZ.MVC.FaKa.BLL
                     {
                         int id = Convert.ToInt32(reader[EKamis.Id.ToString()]);
                         string content = reader[EKamis.Content.ToString()].ToString();
+                        no = reader["NO"].ToString();
                         modelArr.Add(id, content);
                     }
                 }
-            }
-                ));
+            }));
+            tradeNo = no;
             return modelArr;
         }
 
